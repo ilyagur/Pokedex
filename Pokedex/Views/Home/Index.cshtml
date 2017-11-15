@@ -4,17 +4,8 @@
     Layout = "~/Views/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="col-md-offset-2 col-md-2">
-        <h2>Index</h2>
-    </div>
-    <div class="col-md-offset-2 col-md-2">
-        <img src="~/img/google.png" />
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-offset-2 col-md-2">
-        <img src="~/img/google.png" />
-    </div>
-</div>
+<div id="root"> </div>
 
+@section scripts {
+    <script src="~/js/bundle.js"></script>
+}
