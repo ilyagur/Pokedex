@@ -50,15 +50,15 @@ namespace Pokedex.ServerApp {
             return pokemon;
         }
 
-        private async Task<string> GetStringAsync( string requestUri ) {
-            string resultString;
+        //private async Task<string> GetStringAsync( string requestUri ) {
+        //    string resultString;
 
-            if ( !_cache.TryGetValue( requestUri, out resultString ) ) {
-                resultString = await _httpClientAdapter.GetStringAsync( requestUri );
-                _cache.Set( requestUri, resultString );
-            }
+        //    if ( !_cache.TryGetValue( requestUri, out resultString ) ) {
+        //        resultString = await _httpClientAdapter.GetStringAsync( requestUri );
+        //        _cache.Set( requestUri, resultString );
+        //    }
 
-            return resultString;
-        }
+        //    return resultString;
+        //}
     }
 }

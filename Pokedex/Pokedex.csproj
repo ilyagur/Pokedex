@@ -5,6 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\Actions\" />
+    <Folder Include="ClientApp\Components\" />
+    <Folder Include="ClientApp\Constants\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\img\" />

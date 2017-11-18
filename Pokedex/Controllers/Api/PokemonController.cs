@@ -15,8 +15,7 @@ namespace Pokedex.Controllers.Api {
 
         [Route( "GetPokemons/{limit}/{offset}" )]
         public async Task<JsonResult> GetPokemons(int limit, int offset) {
-            var result = Json( await _pokemonProvider.GetPokemons( limit, offset ) );
-            return result;
+            return Json( await _pokemonProvider.GetPokemons( limit, offset ) );
         }
     }
 }

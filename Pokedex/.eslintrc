@@ -1,0 +1,8 @@
+﻿{
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+  },
+  "extends": [ "airbnb-base" ]
+}

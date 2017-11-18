@@ -20,7 +20,7 @@ namespace Pokedex.ServerApp
             _dataProvider = dataProvider;
         }
 
-        public async Task<string> GetPokemons( int limit, int offset ) {
+        public async Task<IList<Pokemon>> GetPokemons( int limit, int offset ) {
             IList<Pokemon> pokemonList = new List<Pokemon>();
             PokemonList list = JsonConvert.DeserializeObject<PokemonList>( await _dataProvider.GetPokemonList( limit, offset ) );
 
@@ -28,36 +28,7 @@ namespace Pokedex.ServerApp
                 pokemonList.Add( JsonConvert.DeserializeObject<Pokemon>( await _dataProvider.GetPokemonByName( result.name ) ) );
             }
 
-            return null;
+            return pokemonList;
         }
-
-        //public async Task<Pokemon> GetPokemonList( int limit, int offset ) {
-        //    IList<Pokemon> resultList = new List<Pokemon>();
-
-        //    string requestUri = $"{_settings.Value.BaseApiUrl}/{_settings.Value.PokemonListEndpoint}?limit={limit}$offset={offset}";
-
-        //    string resultString; 
-            
-        //    if ( !_cache.TryGetValue( requestUri, out resultString ) ) {
-        //        resultString = await _httpClientAdapter.GetStringAsync( requestUri );
-        //        _cache.Set( requestUri, resultString );
-        //    }
-
-        //    PokemonList list = JsonConvert.DeserializeObject<PokemonList>(resultString);
-
-        //    foreach ( var result in list.results ) {
-        //        resultList.Add();
-        //    }
-
-        //    return resultString;
-        //}
-        //private void CachePokemonList() {
-        //    ExpandoObject pokemonList = _cachProvider.GetPokemonList();
-
-        //    if ( pokemonList == null ) {
-        //        ExpandoObject downloadedPokemonList = _onlineProvider.DownloadPokemonList();
-        //    }
-
-        //}
     }
 }

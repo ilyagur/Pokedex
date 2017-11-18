@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Pokedex.ServerApp.JsonModels;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace Pokedex.ServerApp
-{
+namespace Pokedex.ServerApp {
     public interface IPokemonProvider
     {
-        Task<string> GetPokemons( int limit, int offset );
+        Task<IList<Pokemon>> GetPokemons( int limit, int offset );
     }
 }
