@@ -2111,7 +2111,56 @@ var _configureStore2 = _interopRequireDefault(_configureStore);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _configureStore2.default)();
+var initialState = {
+    pokemons: [{
+        name: "sandslash",
+        weight: 295,
+        sprites: {
+            front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/28.png"
+        },
+        height: 10,
+        id: 28,
+        types: [{
+            slot: 1,
+            type: {
+                url: "https://pokeapi.co/api/v2/type/5",
+                name: "ground"
+            }
+        }]
+    }, {
+        name: "vulpix",
+        weight: 295,
+        sprites: {
+            front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/37.png"
+        },
+        height: 10,
+        id: 37,
+        types: [{
+            slot: 1,
+            type: {
+                url: "https://pokeapi.co/api/v2/type/5",
+                name: "ground"
+            }
+        }]
+    }, {
+        name: "spearow",
+        weight: 295,
+        sprites: {
+            front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/21.png"
+        },
+        height: 10,
+        id: 21,
+        types: [{
+            slot: 1,
+            type: {
+                url: "https://pokeapi.co/api/v2/type/5",
+                name: 'fire'
+            }
+        }]
+    }]
+};
+
+var store = (0, _configureStore2.default)(initialState);
 
 _reactDom2.default.render(_react2.default.createElement(
     _reactRedux.Provider,
@@ -10983,13 +11032,20 @@ var App = function (_Component) {
     _createClass(App, [{
         key: 'render',
         value: function render() {
-            var pokemon = this.props.pokemon;
+            var pokemons = this.props.pokemons;
 
             return _react2.default.createElement(
-                'div',
+                'ul',
                 null,
-                pokemon.name,
-                pokemon.color
+                pokemons.map(function (pokemon) {
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        pokemon.name,
+                        ' ',
+                        pokemon.weight
+                    );
+                })
             );
         }
     }]);
@@ -10999,7 +11055,7 @@ var App = function (_Component) {
 
 function mapStateToProps(state) {
     return {
-        pokemon: state.pokemon
+        pokemons: pokemons
     };
 }
 
@@ -11049,7 +11105,8 @@ var _pokemon2 = _interopRequireDefault(_pokemon);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = (0, _redux.combineReducers)({
-    pokemon: _pokemon2.default
+    //https://redux.js.org/docs/basics/Reducers.html
+    pokemons: _pokemon2.default
 });
 
 /***/ }),
@@ -11062,14 +11119,9 @@ exports.default = (0, _redux.combineReducers)({
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.default = refucer;
-var initialState = {
-    name: 'pikachy',
-    color: 'yellow'
-};
-
-function refucer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+exports.default = reducer;
+function reducer() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
     var action = arguments[1];
 
     return state;

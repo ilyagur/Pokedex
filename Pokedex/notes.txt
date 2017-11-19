@@ -1,0 +1,13 @@
+﻿redux store:
+{
+	currentPage
+	typeFilter,
+	pokemons,
+	pokemonsIds,
+	pokemonsFilteredIds,
+	pokemonPageddIds,
+	user : {
+		userdata,
+		favoritpokemons
+	}
+}

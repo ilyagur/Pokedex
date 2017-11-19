@@ -1,8 +1,3 @@
-﻿const initialState = {
-    name: 'pikachy',
-    color: 'yellow'
-}
-
-export default function refucer(state = initialState, action) {
+﻿export default function reducer(state = null, action) {
     return state;
 }

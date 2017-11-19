@@ -3,20 +3,21 @@ import { connect } from 'react-redux'
 
 class App extends Component {
     render() {
-        const pokemon = this.props.pokemon;
+        const pokemons = this.props.pokemons;
 
         return (
-            <div>
-                {pokemon.name}
-                {pokemon.color}
-            </div>
+            <ul>
+                {pokemons.map(pokemon => {
+                    <li>{pokemon.name} {pokemon.weight}</li>
+                })}
+            </ul>
             );
     }
 }
 
 function mapStateToProps(state) {
     return {
-        pokemon: state.pokemon
+        pokemons
     };
 }
 

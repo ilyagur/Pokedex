@@ -1,7 +1,8 @@
 ﻿import { combineReducers } from 'redux'
 
-import pokemon from './pokemon'
+import pokemonsReducer from './pokemon'
 
 export default combineReducers({
-    pokemon
+    //https://redux.js.org/docs/basics/Reducers.html
+    pokemons: pokemonsReducer
 })
