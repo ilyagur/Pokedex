@@ -1,24 +1,33 @@
 ﻿import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+
+import * as PageActions from './../Actions/Page'
+
+import PokemonTable from './../Components/pokemonTable'
 
 class App extends Component {
     render() {
         const pokemons = this.props.pokemons;
 
         return (
-            <ul>
-                {pokemons.map(pokemon => {
-                    <li>{pokemon.name} {pokemon.weight}</li>
-                })}
-            </ul>
+            <div>
+                <PokemonTable pokemons={ pokemons } />
+            </div>
             );
     }
 }
 
 function mapStateToProps(state) {
     return {
-        pokemons
+        pokemons: state.pokemons.pokemons
     };
 }
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+    return {
+        pageActions: bindActionCreators(PageActions, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

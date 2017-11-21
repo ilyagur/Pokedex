@@ -22,9 +22,11 @@ namespace Pokedex.ServerApp
 
         public async Task<IList<Pokemon>> GetPokemons( int limit, int offset ) {
             IList<Pokemon> pokemonList = new List<Pokemon>();
-            PokemonList list = JsonConvert.DeserializeObject<PokemonList>( await _dataProvider.GetPokemonList( limit, offset ) );
+            PokemonList list = JsonConvert.DeserializeObject<PokemonList>( await _dataProvider.GetPokemonList() );
 
-            foreach ( PokemonBio result in list.results ) {
+            IList<PokemonBio> selectedPokemons = list.results.Skip( offset ).Take( limit ).ToList();
+
+            foreach ( PokemonBio result in selectedPokemons ) {
                 pokemonList.Add( JsonConvert.DeserializeObject<Pokemon>( await _dataProvider.GetPokemonByName( result.name ) ) );
             }
 

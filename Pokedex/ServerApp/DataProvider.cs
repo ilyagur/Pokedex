@@ -18,15 +18,35 @@ namespace Pokedex.ServerApp {
             _cache = cache;
         }
 
-        public Task<string> GetPokemonList( int limit, int offset ) {
-            return Task.Run( () => File.ReadAllText( Directory.GetCurrentDirectory() + "/PokemonCache/pokemonList.json" ) );
-            //return GetStringAsync( $"{_settings.Value.BaseApiUrl}/{_settings.Value.PokemonListEndpoint}?limit={limit}$offset={offset}" );
+        public async Task<string> GetPokemonList() {
+            //TODO: все это безобразие надо переписать: вынести общий код в отдельный метод + threadSafe
+
+            string pokemonList, cacheKey = "pokemonList";
+
+            if ( _cache.TryGetValue<string>( cacheKey, out pokemonList ) ) {
+                return pokemonList;
+            }
+
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "PokemonCache", $"{cacheKey}.json" );
+            if ( File.Exists( filePath ) ) {
+                pokemonList = File.ReadAllText(filePath);
+                _cache.Set(cacheKey, pokemonList);
+                return pokemonList;
+            }
+
+            string requestUri = $"{_settings.Value.BaseApiUrl}/{_settings.Value.PokemonListEndpoint}?limit={int.MaxValue}$offset=0";
+
+            pokemonList = await _httpClientAdapter.GetStringAsync(requestUri);
+
+            _cache.Set( cacheKey, pokemonList );
+            File.WriteAllText(filePath, pokemonList);
+
+            return pokemonList;
         }
 
         public async Task<string> GetPokemonByName( string name ) {
             //грязненько кешируем всеми возможными способами
-            string pokemon;
-            string cacheKey = name + "_fullInfo";
+            string pokemon, cacheKey = name + "_fullInfo";
 
             if ( _cache.TryGetValue( cacheKey, out pokemon ) ) {
                 return pokemon;
@@ -49,16 +69,5 @@ namespace Pokedex.ServerApp {
 
             return pokemon;
         }
-
-        //private async Task<string> GetStringAsync( string requestUri ) {
-        //    string resultString;
-
-        //    if ( !_cache.TryGetValue( requestUri, out resultString ) ) {
-        //        resultString = await _httpClientAdapter.GetStringAsync( requestUri );
-        //        _cache.Set( requestUri, resultString );
-        //    }
-
-        //    return resultString;
-        //}
     }
 }

@@ -7,7 +7,7 @@ namespace Pokedex.ServerApp.Interfaces
 {
     public interface IDataProvider
     {
-        Task<string> GetPokemonList( int limit, int offset );
+        Task<string> GetPokemonList();
         Task<string> GetPokemonByName( string name );
     }
 }
