@@ -2,8 +2,19 @@
     text-align: right;
 }
 
+.pokemon-avatar {
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin: auto;
+}
+
 .text-left {
     text-align: left;
+}
+
+.text-center {
+    text-align: center;
 }
 
 .vert-offset-top-12 {

@@ -8,11 +8,13 @@ import PokemonTable from './../Components/pokemonTable'
 
 class App extends Component {
     render() {
-        const pokemons = this.props.pokemons;
+        const pokemons = this.props.pokemons,
+            pager = this.props.pager,
+            pageActions = this.props.pageActions
 
         return (
             <div>
-                <PokemonTable pokemons={ pokemons } />
+                <PokemonTable pokemons={pokemons} pager={pager} pageActions={pageActions}/>
             </div>
             );
     }
@@ -20,6 +22,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
     return {
+        pager: state.page.pager,
         pokemons: state.pokemons.pokemons
     };
 }
