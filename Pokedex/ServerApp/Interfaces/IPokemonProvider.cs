@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 namespace Pokedex.ServerApp {
     public interface IPokemonProvider
     {
-        Task<IList<Pokemon>> GetPokemons( int limit, int offset );
+        Task<PokemonList> GetPokemonList();
+        Task<Pokemon> GetPokemonByName( string name );
     }
 }

@@ -11,7 +11,8 @@ namespace Pokedex
     public static class BindSettings
     {
         public static void AddAppSettings(this IServiceCollection services, IConfigurationRoot configuration) {
-            services.Configure<PokemonProviderSettings>( configuration.GetSection( "PokemonProviderSettings" ) );
+            services.Configure<PokemonHttpClientAdapterSettings>( configuration.GetSection( "PokemonHttpClientAdapterSettings" ) );
+            services.Configure<PokemonCacheSettings>( configuration.GetSection( "PokemonCacheSettings" ) );
         }
     }
 }

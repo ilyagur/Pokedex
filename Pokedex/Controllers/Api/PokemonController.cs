@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Pokedex.ServerApp;
+using Pokedex.ServerApp.JsonModels;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pokedex.Controllers.Api {
@@ -15,7 +19,16 @@ namespace Pokedex.Controllers.Api {
 
         [Route( "GetPokemons/{limit}/{offset}" )]
         public async Task<JsonResult> GetPokemons(int limit, int offset) {
-            return Json( await _pokemonProvider.GetPokemons( limit, offset ) );
+            IList<Pokemon> pokemonList = new List<Pokemon>();
+            PokemonList list =  await _pokemonProvider.GetPokemonList();
+
+            IList<PokemonBio> selectedPokemons = list.results.Skip( offset ).Take( limit ).ToList();
+
+            foreach ( PokemonBio result in selectedPokemons ) {
+                pokemonList.Add( await _pokemonProvider.GetPokemonByName( result.name ));
+            }
+
+            return Json( pokemonList );
         }
     }
 }
