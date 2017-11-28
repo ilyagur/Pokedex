@@ -13,8 +13,17 @@ namespace Pokedex.ServerApp.Interfaces
         public HttpClientAdapter() {
             _client = new HttpClient();
         }
-        public Task<string> GetStringAsync( string requestUri ) {
-            return _client.GetStringAsync( requestUri );
+        public async Task<string> GetStringAsync( string requestUri ) {
+            string result = string.Empty;
+
+            try {
+                result = await _client.GetStringAsync( requestUri );
+            } catch ( Exception ) {
+                //logger
+                return null;
+            }
+
+            return result;
         }
     }
 }

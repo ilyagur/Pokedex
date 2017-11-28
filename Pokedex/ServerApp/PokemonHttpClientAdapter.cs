@@ -1,15 +1,11 @@
-﻿using Pokedex.ServerApp.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Pokedex.ServerApp.JsonModels;
-using Microsoft.Extensions.Options;
-using Pokedex.ServerApp.Settings;
+﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Pokedex.ServerApp.Interfaces;
+using Pokedex.ServerApp.JsonModels;
+using Pokedex.ServerApp.Settings;
+using System.Threading.Tasks;
 
-namespace Pokedex.ServerApp
-{
+namespace Pokedex.ServerApp {
     public class PokemonHttpClientAdapter : IPokemonHttpClientAdapter {
         private readonly IHttpClientAdapter _httpClientAdapter;
         private readonly IOptions<PokemonHttpClientAdapterSettings> _settings;
@@ -18,28 +14,66 @@ namespace Pokedex.ServerApp
             _settings = settings;
         }
         public async Task<Pokemon> GetPokemonByName( string pokemonName ) {
-            string requestUri = $"{_settings.Value.BaseApiUrl}/{_settings.Value.PokemonListEndpoint}/{pokemonName}";
+            string requestUri = $"{_settings.Value.BaseApiUrl}/{_settings.Value.PokemonListEndpoint}/{pokemonName}", pokemonJson = string.Empty;
+            Pokemon pokemon = new Pokemon();
+         
+            pokemonJson = await _httpClientAdapter.GetStringAsync( requestUri );
+         
+            if ( string.IsNullOrEmpty( pokemonJson ) ) {
+                return null;
+            }
 
-            string pokemonJson = await _httpClientAdapter.GetStringAsync( requestUri );
+            try {
+                pokemon = JsonConvert.DeserializeObject<Pokemon>( pokemonJson );
+            } catch(JsonException) {
+                //logger
+                return null;
+            }
 
-            return JsonConvert.DeserializeObject<Pokemon>( pokemonJson );
+            return pokemon;
         }
 
         public async Task<PokemonList> GetPokemonList() {
-            string requestUri = $"{_settings.Value.BaseApiUrl}/{_settings.Value.PokemonListEndpoint}";
+            string requestUri = $"{_settings.Value.BaseApiUrl}/{_settings.Value.PokemonListEndpoint}{_settings.Value.PokemonListOptions}";
+            PokemonList pokemonList;
 
-            //TODO: совсем не самое красивое решение, тут бы строку из appsettings с плейсхолдерами
-            string requestUriForFirst20Pokemons = requestUri + "?limit=20$offset=0";
+            //get first portion of pokemons to find out mount of them
+            string requestUriForFirstPortion = string.Format( requestUri, 1, 0);
 
-            string pokemonListJson = await _httpClientAdapter.GetStringAsync( requestUriForFirst20Pokemons );
+            pokemonList = await DownloadPokemonList( requestUriForFirstPortion );
 
-            PokemonList pokemonList = JsonConvert.DeserializeObject<PokemonList>(pokemonListJson);
+            if ( pokemonList == null ) {
+                return null;
+            }
 
-            string requestUriForAllPokemons = requestUri + $"?limit={pokemonList.count}$offset=0";
+            //get whole pokemons list
+            string requestUriForAllPokemons = string.Format( requestUri, pokemonList.count, 0 );
 
-            pokemonListJson = await _httpClientAdapter.GetStringAsync( requestUriForAllPokemons );
+            pokemonList = await DownloadPokemonList(requestUriForAllPokemons);
 
-            return JsonConvert.DeserializeObject<PokemonList>( pokemonListJson );
+            if ( pokemonList == null ) {
+                return null;
+            }
+
+            return pokemonList;
+        }
+
+        private async Task<PokemonList> DownloadPokemonList(string requestUri) {
+            string pokemonListJson = await _httpClientAdapter.GetStringAsync( requestUri );
+
+            if ( string.IsNullOrEmpty( pokemonListJson ) ) {
+                return null;
+            }
+
+            PokemonList pokemonList;
+            try {
+                pokemonList = JsonConvert.DeserializeObject<PokemonList>( pokemonListJson );
+            } catch ( JsonException ) {
+                //logger
+                return null;
+            }
+
+            return pokemonList;
         }
     }
 }

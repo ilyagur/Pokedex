@@ -20,27 +20,65 @@ namespace Pokedex.ServerApp
             _fileCache = fileCache;
 
             _pokemonListCacheKey = settings.Value.PokemonListCacheKey;
+
+            if ( string.IsNullOrEmpty( _pokemonListCacheKey ) ) {
+                throw new Exception( "Cache key cannot be null or empty. Check PokemonListCacheKey." );
+            }
         }
         public void SavePokemon( Pokemon pokemon ) {
+            if ( pokemon == null || string.IsNullOrEmpty(pokemon.name)) {
+                return;
+            }
+
             _memoryCache.Set( pokemon.name, pokemon );
-            _fileCache.Set( pokemon.name, JsonConvert.SerializeObject( pokemon ) );
+
+            string pokemonJson;
+            try {
+                pokemonJson = JsonConvert.SerializeObject( pokemon );
+            } catch ( Exception ) {
+                //logger;
+                return;
+            }
+
+
+            _fileCache.Set( pokemon.name, pokemonJson );
         }
 
         public void SavePokemonList( PokemonList pokemonList ) {
-            _memoryCache.Set(_pokemonListCacheKey, pokemonList);
-            _fileCache.Set(_pokemonListCacheKey, JsonConvert.SerializeObject(pokemonList));
+            if ( pokemonList == null ) {
+                return;
+            }
+
+            _memoryCache.Set( _pokemonListCacheKey, pokemonList );
+
+            string pokemonListJson;
+            try {
+                pokemonListJson = JsonConvert.SerializeObject( pokemonList );
+            } catch ( JsonException ) {
+                //logger
+                return;
+            }
+
+            _fileCache.Set(_pokemonListCacheKey, pokemonListJson);
         }
 
         public bool TryGetPokemonByName( string pokemonName, out Pokemon pokemon ) {
-            pokemon = new Pokemon();
-
             if ( _memoryCache.TryGetValue( pokemonName, out pokemon ) ) {
                 return true;
             }
 
             string pokemonJson;
             if ( _fileCache.TryGetValue( pokemonName, out pokemonJson ) ) {
-                pokemon = JsonConvert.DeserializeObject<Pokemon>(pokemonJson);
+
+                if ( string.IsNullOrEmpty( pokemonJson ) ) {
+                    return false;
+                }
+
+                try {
+                    pokemon = JsonConvert.DeserializeObject<Pokemon>( pokemonJson );
+                } catch ( JsonException ) {
+                    return false;
+                }
 
                 _memoryCache.Set(pokemonName, pokemon);
 
@@ -51,15 +89,21 @@ namespace Pokedex.ServerApp
         }
 
         public bool TryGetPokemonList( out PokemonList pokemonList ) {
-            pokemonList = new PokemonList();
-
             if ( _memoryCache.TryGetValue( _pokemonListCacheKey, out pokemonList ) ) {
                 return true; 
             }
 
             string pokemonListJson;
             if ( _fileCache.TryGetValue( _pokemonListCacheKey, out pokemonListJson ) ) {
-                pokemonList = JsonConvert.DeserializeObject<PokemonList>( pokemonListJson );
+                if ( string.IsNullOrEmpty( pokemonListJson ) ) {
+                    return false;
+                }
+
+                try {
+                    pokemonList = JsonConvert.DeserializeObject<PokemonList>( pokemonListJson );
+                } catch ( JsonException ) {
+                    return false;
+                }
 
                 _memoryCache.Set(_pokemonListCacheKey, pokemonList);
 

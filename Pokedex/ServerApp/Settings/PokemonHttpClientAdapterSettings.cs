@@ -3,5 +3,6 @@
     {
         public string BaseApiUrl { get; set; }
         public string PokemonListEndpoint { get; set; }
+        public string PokemonListOptions { get; set; }
     }
 }

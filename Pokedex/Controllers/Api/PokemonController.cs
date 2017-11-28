@@ -19,16 +19,31 @@ namespace Pokedex.Controllers.Api {
 
         [Route( "GetPokemons/{limit}/{offset}" )]
         public async Task<JsonResult> GetPokemons(int limit, int offset) {
-            IList<Pokemon> pokemonList = new List<Pokemon>();
+            if ( limit < 0 || offset < 0 ) {
+                return Json( "{\"error\": \"limit and offset can't be less then 0\"}" );
+            }
+
+            IList<Pokemon> listOfFullPokemonInfo = new List<Pokemon>();
             PokemonList list =  await _pokemonProvider.GetPokemonList();
+
+            if ( listOfFullPokemonInfo == null ) {
+                return Json( "{\"error\": \"can't get list of pokemons\"}" ); ;
+            }
 
             IList<PokemonBio> selectedPokemons = list.results.Skip( offset ).Take( limit ).ToList();
 
+            Pokemon pokemon;
             foreach ( PokemonBio result in selectedPokemons ) {
-                pokemonList.Add( await _pokemonProvider.GetPokemonByName( result.name ));
+                pokemon = await _pokemonProvider.GetPokemonByName( result.name );
+
+                if ( pokemon == null ) {
+                    continue;
+                }
+
+                listOfFullPokemonInfo.Add( pokemon );
             }
 
-            return Json( pokemonList );
+            return Json( listOfFullPokemonInfo );
         }
     }
 }

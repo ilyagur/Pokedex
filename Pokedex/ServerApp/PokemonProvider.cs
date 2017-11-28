@@ -25,6 +25,10 @@ namespace Pokedex.ServerApp {
 
             pokemonList = await _pokemonHttpClientAdapter.GetPokemonList();
 
+            if ( pokemonList == null ) {
+                return null;
+            }
+
             _pokemonCache.SavePokemonList( pokemonList );
 
             return pokemonList;
