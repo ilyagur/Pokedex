@@ -11,11 +11,11 @@ namespace Pokedex
     public static class InjectedDependencies
     {
         public static void AddDependencies( this IServiceCollection services ) {
-            services.AddTransient<IFileCache, FileCache>();
-            services.AddTransient<IHttpClientAdapter, HttpClientAdapter>();
-            services.AddTransient<IPokemonCache, PokemonCache>();
-            services.AddTransient<IPokemonHttpClientAdapter, PokemonHttpClientAdapter>();
-            services.AddTransient<IPokemonProvider, PokemonProvider>();
+            services.AddSingleton<IFileCache, FileCache>();
+            services.AddScoped<IHttpClientAdapter, HttpClientAdapter>();
+            services.AddScoped<IPokemonCache, PokemonCache>();
+            services.AddScoped<IPokemonHttpClientAdapter, PokemonHttpClientAdapter>();
+            services.AddScoped<IPokemonProvider, PokemonProvider>();
         }
     }
 }

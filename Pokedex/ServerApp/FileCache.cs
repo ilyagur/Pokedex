@@ -2,6 +2,7 @@
 using Pokedex.ServerApp.Interfaces;
 using Pokedex.ServerApp.Settings;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
@@ -9,7 +10,7 @@ namespace Pokedex.ServerApp {
     public class FileCache : IFileCache {
         private readonly IOptions<PokemonCacheSettings> _settings;
         private readonly string _cacheFolderPath;
-        private ReaderWriterLockSlim _lockSlim = new ReaderWriterLockSlim();
+        private Dictionary<string, ReaderWriterLockSlim> _lockSlimCollection = new Dictionary<string, ReaderWriterLockSlim>();
         public FileCache( IOptions<PokemonCacheSettings> settings ) {
             _settings = settings;
 
@@ -22,45 +23,70 @@ namespace Pokedex.ServerApp {
 
         public void Set( string key, string value ) {
 
-            if ( String.IsNullOrEmpty( key ) ) {
-                return;
-            }
+            ReaderWriterLockSlim lockSlim = GetLockSlim(key);
 
-            string filePath = Path.Combine( _cacheFolderPath, $"{key}.json" );
+            lockSlim.EnterWriteLock();
 
-            _lockSlim.EnterWriteLock();
             try {
+                if ( String.IsNullOrEmpty( key ) ) {
+                    return;
+                }
+
+                string filePath = Path.Combine( _cacheFolderPath, $"{key}.json" );
+
                 File.WriteAllText( filePath, value );
             } catch ( Exception ) {
                 //logger
             } finally {
-                _lockSlim.ExitWriteLock();
+                lockSlim.ExitWriteLock();
             }
         }
 
         public bool TryGetValue( string key, out string value ) {
             value = string.Empty;
 
-            if ( String.IsNullOrEmpty( key ) ) {
-                return false;
-            }
+            ReaderWriterLockSlim lockSlim = GetLockSlim(key);
 
-            string filePath = Path.Combine( _cacheFolderPath, $"{key}.json" );
+            lockSlim.EnterReadLock();
 
-            if ( !File.Exists( filePath ) ) {
-                return false;
-            }
-
-            _lockSlim.EnterReadLock();
             try {
+                if ( String.IsNullOrEmpty( key ) ) {
+                    return false;
+                }
+
+                string filePath = Path.Combine( _cacheFolderPath, $"{key}.json" );
+
+                if ( !File.Exists( filePath ) ) {
+                    return false;
+                }
+
                 value = File.ReadAllText( filePath );
             } catch ( Exception ) {
                 //logger
             } finally {
-                _lockSlim.ExitReadLock();
+                lockSlim.ExitReadLock();
             }
 
             return true;
+        }
+
+        private ReaderWriterLockSlim GetLockSlim( string key ) {
+            if ( _lockSlimCollection.ContainsKey( key ) ) {
+                return _lockSlimCollection[key];
+            }
+
+            ReaderWriterLockSlim lockSlim  = new ReaderWriterLockSlim();
+            _lockSlimCollection.Add(key, lockSlim);
+
+            return lockSlim;
+        }
+
+        ~FileCache() {
+            foreach ( KeyValuePair<string, ReaderWriterLockSlim> kvPair in _lockSlimCollection ) {
+                if ( kvPair.Value != null ) {
+                    kvPair.Value.Dispose();
+                }
+            }
         }
     }
 }
