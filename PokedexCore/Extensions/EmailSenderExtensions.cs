@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using PokedexCore.Services.Interfaces;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using PokedexCore.Services;
 
-namespace PokedexCore.Services
-{
+namespace PokedexCore.Services {
     public static class EmailSenderExtensions
     {
         public static Task SendEmailConfirmationAsync(this IEmailSender emailSender, string email, string link)

@@ -34,9 +34,6 @@ namespace PokedexCore
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
-
             services.AddAuthentication().AddFacebook( fbOpt => {
                 fbOpt.AppId = Configuration["AppID"];
                 fbOpt.ClientSecret = Configuration["Secret"];

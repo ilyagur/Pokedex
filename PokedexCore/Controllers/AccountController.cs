@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using PokedexCore.Models;
 using PokedexCore.Models.AccountViewModels;
 using PokedexCore.Services;
+using PokedexCore.Services.Interfaces;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
-namespace PokedexCore.Controllers
-{
+namespace PokedexCore.Controllers {
     [Authorize]
     [Route("[controller]/[action]")]
     public class AccountController : Controller

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using PokedexCore.Models;
 using PokedexCore.Models.ManageViewModels;
 using PokedexCore.Services;
+using PokedexCore.Services.Interfaces;
 
 namespace PokedexCore.Controllers
 {
