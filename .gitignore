@@ -7,3 +7,8 @@
 /.vs
 /Pokedex/node_modules
 /Pokedex/PokemonCache
+/PokedexCore/bin/Debug/netcoreapp2.0
+/PokedexCore/obj/Debug/netcoreapp2.0
+/PokedexCore/obj/PokedexCore.csproj.nuget.g.targets
+/PokedexCore/obj/PokedexCore.csproj.nuget.g.props
+/PokedexCore/obj/PokedexCore.csproj.nuget.cache
