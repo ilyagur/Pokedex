@@ -8,15 +8,14 @@ class PokemonCard extends Component {
         let pokemon = this.props.pokemon
 
         return (
+
             <div className="col-xs-6 col-md-3">
-                <div className="card">
-                    <div className="card-header">
-                        <h5 className="text-center">{pokemon.name}</h5>
-                    </div>
-                    <div className="card-body">
+                <div className="panel panel-default">
+                    <div className="panel-heading">{pokemon.name}</div>
+                    <div className="panel-body">
                         <img className="pokemon-avatar" src={pokemon.sprites.front_default} /> 
                     </div>
-                    <div className="card-body">
+                    <div className="panel-footer">
                         <PokemonType types={pokemon.types} />
                     </div>
                 </div>

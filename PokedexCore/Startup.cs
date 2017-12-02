@@ -41,6 +41,10 @@ namespace PokedexCore
 
             services.AddMvc();
 
+            services.AddAppSettings( Configuration );
+            services.AddDependencies();
+            services.AddMemoryCache();
+
             services.Configure<MvcOptions>( options =>
             {
                 options.Filters.Add( new RequireHttpsAttribute() );

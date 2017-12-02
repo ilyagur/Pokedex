@@ -10,7 +10,8 @@ namespace PokedexCore.Services {
     public class FileCache : IFileCache {
         private readonly IOptions<CacheSettings> _settings;
         private readonly string _cacheFolderPath;
-        private Dictionary<string, ReaderWriterLockSlim> _lockSlimCollection = new Dictionary<string, ReaderWriterLockSlim>();
+        private Dictionary<string, ReaderWriterLockSlim> _fileLockCollection = new Dictionary<string, ReaderWriterLockSlim>();
+        private ReaderWriterLockSlim _fileLockCollectionLock = new ReaderWriterLockSlim();
         public FileCache( IOptions<CacheSettings> settings ) {
             _settings = settings;
 
@@ -71,18 +72,29 @@ namespace PokedexCore.Services {
         }
 
         private ReaderWriterLockSlim GetLockSlim( string key ) {
-            if ( _lockSlimCollection.ContainsKey( key ) ) {
-                return _lockSlimCollection[key];
+            _fileLockCollectionLock.EnterUpgradeableReadLock();
+
+            try {
+                if ( _fileLockCollection.ContainsKey( key ) ) {
+                    return _fileLockCollection[key];
+                }
+
+                _fileLockCollectionLock.EnterWriteLock();
+                try {
+                    ReaderWriterLockSlim fileLock = new ReaderWriterLockSlim();
+                    _fileLockCollection.Add(key, fileLock);
+                    return fileLock;
+                } finally {
+                    _fileLockCollectionLock.ExitWriteLock();
+                }
+                
+            } finally {
+                _fileLockCollectionLock.ExitUpgradeableReadLock();
             }
-
-            ReaderWriterLockSlim lockSlim  = new ReaderWriterLockSlim();
-            _lockSlimCollection.Add(key, lockSlim);
-
-            return lockSlim;
         }
 
         ~FileCache() {
-            foreach ( KeyValuePair<string, ReaderWriterLockSlim> kvPair in _lockSlimCollection ) {
+            foreach ( KeyValuePair<string, ReaderWriterLockSlim> kvPair in _fileLockCollection ) {
                 if ( kvPair.Value != null ) {
                     kvPair.Value.Dispose();
                 }

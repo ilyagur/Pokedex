@@ -7,8 +7,8 @@ class PokemonType extends Component {
         return types.map((type) => {
             let typeName = type.type.name;
             switch (typeName) {
-                case 'ground': return (<h4 key={type.slot}><span className="badge badge-pill badge-secondary">{typeName}</span></h4>)
-                case 'fire': return (<h4 key={type.slot}><span className="badge badge-pill badge-danger">{typeName}</span></h4>)
+                case 'ground': return (<h4 key={type.slot}><span className="label label-default">{typeName}</span></h4>)
+                case 'fire': return (<h4 key={type.slot}><span className="label label-danger">{typeName}</span></h4>)
                 default: return (<h4 key={type.slot}><span>{type.type.name}</span></h4>)
             }
         })

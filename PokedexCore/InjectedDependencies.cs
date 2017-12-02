@@ -11,7 +11,7 @@ namespace PokedexCore {
             services.AddScoped<IPokemonCache, PokemonCache>();
             services.AddScoped<IPokemonHttpClientAdapter, PokemonHttpClientAdapter>();
             services.AddScoped<IPokemonProvider, PokemonProvider>();
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IEmailSender, EmailSender>();
         }
     }
 }
