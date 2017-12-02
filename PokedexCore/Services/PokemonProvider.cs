@@ -54,10 +54,14 @@ namespace PokedexCore.Services {
             return pokemon;
         }
 
-        public async Task<IList<Pokemon>> GetFavoritePokemons( string UserName ) {
+        public async Task<IList<Pokemon>> GetFavoritePokemons( string userName ) {
+            if ( string.IsNullOrEmpty( userName ) ) {
+                return null;
+            }
+
             IList<Pokemon> listOfFullPokemonInfo = new List<Pokemon>();
 
-            string pokemonsNamesJson = _pokemonDbAdapter.GetFavoritePokemons( UserName );
+            string pokemonsNamesJson = _pokemonDbAdapter.GetFavoritePokemons( userName );
             if ( string.IsNullOrEmpty( pokemonsNamesJson ) ) {
                 return null;
             }
