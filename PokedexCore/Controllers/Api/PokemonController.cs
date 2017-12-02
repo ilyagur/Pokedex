@@ -35,18 +35,30 @@ namespace PokedexCore.Controllers.Api {
                 return Json( "{\"error\": \"limit and offset can't be less then 0\"}" );
             }
 
-            IList<Pokemon> listOfFullPokemonInfo = new List<Pokemon>();
-            PokemonList list = await _pokemonProvider.GetPokemonList();
+            PokemonList list;
+            try {
+                list = await _pokemonProvider.GetPokemonList();
+            } catch ( Exception ) {
+                //logger;
+                return Json( "{\"error\": \"can't get list of pokemons\"}" );
+            }
 
-            if ( listOfFullPokemonInfo == null ) {
-                return Json( "{\"error\": \"can't get list of pokemons\"}" ); ;
+            if ( list == null ) {
+                return Json( "{\"error\": \"No Pokemons found\"}" );
             }
 
             IList<PokemonBio> selectedPokemons = list.results.Skip( offset ).Take( limit ).ToList();
 
             Pokemon pokemon;
+            IList<Pokemon> listOfFullPokemonInfo = new List<Pokemon>();
+
             foreach ( PokemonBio result in selectedPokemons ) {
-                pokemon = await _pokemonProvider.GetPokemonByName( result.name );
+                try {
+                    pokemon = await _pokemonProvider.GetPokemonByName( result.name );
+                } catch ( Exception ) {
+                    //logger
+                    continue;
+                }
 
                 if ( pokemon == null ) {
                     continue;
@@ -66,7 +78,6 @@ namespace PokedexCore.Controllers.Api {
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [Route( "SaveFavoritePokemons" )]
         public ActionResult SaveFavoritePokemons( [FromBody] string [] pokemons ) {
             if ( pokemons == null || pokemons.Length == 0 ) {
