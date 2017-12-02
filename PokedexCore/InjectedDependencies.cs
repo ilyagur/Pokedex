@@ -7,6 +7,7 @@ namespace PokedexCore {
     {
         public static void AddDependencies( this IServiceCollection services ) {
             services.AddSingleton<IFileCache, FileCache>();
+            services.AddScoped<IPokemonDbAdapter, PokemonDbAdapter>();
             services.AddScoped<IHttpClientAdapter, HttpClientAdapter>();
             services.AddScoped<IPokemonCache, PokemonCache>();
             services.AddScoped<IPokemonHttpClientAdapter, PokemonHttpClientAdapter>();
