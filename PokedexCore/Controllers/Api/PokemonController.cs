@@ -13,26 +13,21 @@ namespace PokedexCore.Controllers.Api {
     [Authorize]
     [Produces( "application/json" )]
     [Route( "api/Pokemon" )]
-    public class PokemonController : Controller {
+    public class PokemonController : BaseApiController {
         private IPokemonProvider _pokemonProvider;
-        private UserManager<ApplicationUser> _userManager;
 
-        private string UserName {
-            get {
-                return _userManager.GetUserName( HttpContext.User );
-            }
-        }
-
-        public PokemonController( IPokemonProvider provider, UserManager<ApplicationUser> userManager ) {
+        public PokemonController( IPokemonProvider provider, UserManager<ApplicationUser> userManager )
+            : base( userManager ) 
+        {
             _pokemonProvider = provider;
-            _userManager = userManager;
         }
 
         [AllowAnonymous]
         [Route( "GetPokemons/{limit}/{offset}" )]
         public async Task<JsonResult> GetPokemons( int limit, int offset ) {
             if ( limit < 0 || offset < 0 ) {
-                return Json( "{\"error\": \"limit and offset can't be less then 0\"}" );
+                //logger
+                return Json(null);
             }
 
             PokemonList list;
@@ -40,11 +35,11 @@ namespace PokedexCore.Controllers.Api {
                 list = await _pokemonProvider.GetPokemonList();
             } catch ( Exception ) {
                 //logger;
-                return Json( "{\"error\": \"can't get list of pokemons\"}" );
+                return Json(null);
             }
 
             if ( list == null ) {
-                return Json( "{\"error\": \"No Pokemons found\"}" );
+                return Json(null);
             }
 
             IList<PokemonBio> selectedPokemons = list.results.Skip( offset ).Take( limit ).ToList();

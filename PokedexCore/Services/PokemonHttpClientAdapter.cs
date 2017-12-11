@@ -3,25 +3,38 @@ using Newtonsoft.Json;
 using PokedexCore.Models.Json;
 using PokedexCore.Models.Settings;
 using PokedexCore.Services.Interfaces;
+using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace PokedexCore.Services {
     public class PokemonHttpClientAdapter : IPokemonHttpClientAdapter {
-        private readonly IHttpClientAdapter _httpClientAdapter;
         private readonly IOptions<HttpClientAdapterSettings> _settings;
-        public PokemonHttpClientAdapter( IHttpClientAdapter httpClientAdapter, IOptions<HttpClientAdapterSettings> settings ) {
-            _httpClientAdapter = httpClientAdapter;
+        private readonly HttpClient _httpClient;
+        public PokemonHttpClientAdapter(IOptions<HttpClientAdapterSettings> settings ) {
             _settings = settings;
+            _httpClient = new HttpClient();
+
+            if ( string.IsNullOrEmpty( _settings.Value.PokemonByNameEndpoint ) ) {
+                throw new Exception( "PokemonByNameEndpoint cannot be empty string" );
+            }
+
+            if ( string.IsNullOrEmpty( _settings.Value.PokemonListEndpoint ) ) {
+                throw new Exception( "ListEndpoint cannot be empty string" );
+            }
         }
         public async Task<Pokemon> GetPokemonByName( string pokemonName ) {
-            string requestUri = $"{_settings.Value.BaseApiUrl}/{_settings.Value.ListEndpoint}/{pokemonName}", pokemonJson = string.Empty;
-            Pokemon pokemon = new Pokemon();
+            if ( string.IsNullOrEmpty( pokemonName ) ) {
+                return null;
+            }
          
-            pokemonJson = await _httpClientAdapter.GetStringAsync( requestUri );
+            string pokemonJson = await GetStringAsync(string.Format(_settings.Value.PokemonByNameEndpoint, pokemonName));
          
             if ( string.IsNullOrEmpty( pokemonJson ) ) {
                 return null;
             }
+
+            Pokemon pokemon = new Pokemon();
 
             try {
                 pokemon = JsonConvert.DeserializeObject<Pokemon>( pokemonJson );
@@ -34,22 +47,15 @@ namespace PokedexCore.Services {
         }
 
         public async Task<PokemonList> GetPokemonList() {
-            string requestUri = $"{_settings.Value.BaseApiUrl}/{_settings.Value.ListEndpoint}{_settings.Value.ListOptions}";
-            PokemonList pokemonList;
-
             //get first portion of pokemons to find out mount of them
-            string requestUriForFirstPortion = string.Format( requestUri, 1, 0);
+            PokemonList pokemonList = await DownloadPokemonList(string.Format( _settings.Value.PokemonListEndpoint, 1, 0 ));
 
-            pokemonList = await DownloadPokemonList( requestUriForFirstPortion );
-
-            if ( pokemonList == null ) {
+            if ( pokemonList == null || pokemonList.count <= 0 ) {
                 return null;
             }
 
             //get whole pokemons list
-            string requestUriForAllPokemons = string.Format( requestUri, pokemonList.count, 0 );
-
-            pokemonList = await DownloadPokemonList(requestUriForAllPokemons);
+            pokemonList = await DownloadPokemonList( string.Format( _settings.Value.PokemonListEndpoint, pokemonList.count, 0 ));
 
             if ( pokemonList == null ) {
                 return null;
@@ -59,7 +65,11 @@ namespace PokedexCore.Services {
         }
 
         private async Task<PokemonList> DownloadPokemonList(string requestUri) {
-            string pokemonListJson = await _httpClientAdapter.GetStringAsync( requestUri );
+            if ( string.IsNullOrEmpty( requestUri ) ) {
+                return null;
+            }
+
+            string pokemonListJson = await GetStringAsync( requestUri );
 
             if ( string.IsNullOrEmpty( pokemonListJson ) ) {
                 return null;
@@ -74,6 +84,21 @@ namespace PokedexCore.Services {
             }
 
             return pokemonList;
+        }
+        private async Task<string> GetStringAsync( string requestUri ) {
+            if ( string.IsNullOrEmpty( requestUri ) ) {
+                return null;
+            }
+            string result = string.Empty;
+
+            try {
+                result = await _httpClient.GetStringAsync( requestUri );
+            } catch ( Exception ) {
+                //logger
+                return null;
+            }
+
+            return result;
         }
     }
 }

@@ -10,55 +10,45 @@ namespace PokedexCore.Services {
     public class PokemonCache : IPokemonCache {
         private readonly IMemoryCache _memoryCache;
         private readonly IFileCache _fileCache;
-        private readonly string _pokemonListCacheKey;
+        private readonly IOptions<CacheSettings> _settings;
         public PokemonCache( IMemoryCache memoryCache, IFileCache fileCache, IOptions<CacheSettings> settings ) {
             _memoryCache = memoryCache;
             _fileCache = fileCache;
+            _settings = settings;
 
-            _pokemonListCacheKey = settings.Value.ListCacheKey;
-
-            if ( string.IsNullOrEmpty( _pokemonListCacheKey ) ) {
-                throw new Exception( "Cache key cannot be null or empty. Check PokemonListCacheKey." );
+            if ( string.IsNullOrEmpty( _settings.Value.ListCacheKey ) ) {
+                throw new Exception( "ListCacheKey cannot be empty string." );
             }
         }
-        public void SavePokemon( Pokemon pokemon ) {
-            if ( pokemon == null || string.IsNullOrEmpty(pokemon.name)) {
-                return;
+        public Pokemon SavePokemon( Pokemon pokemon ) {
+            if ( pokemon == null || string.IsNullOrEmpty(pokemon.name) || _fileCache == null || _memoryCache == null ) {
+                return null;
             }
 
             _memoryCache.Set( pokemon.name, pokemon );
+            _fileCache.Set( pokemon.name, JsonConvert.SerializeObject( pokemon ));
 
-            string pokemonJson;
-            try {
-                pokemonJson = JsonConvert.SerializeObject( pokemon );
-            } catch ( Exception ) {
-                //logger;
-                return;
-            }
-
-
-            _fileCache.Set( pokemon.name, pokemonJson );
+            return pokemon;
         }
 
-        public void SavePokemonList( PokemonList pokemonList ) {
-            if ( pokemonList == null ) {
-                return;
+        public PokemonList SavePokemonList( PokemonList pokemonList ) {
+            if ( pokemonList == null || string.IsNullOrEmpty( _settings.Value.ListCacheKey ) ) {
+                return null;
             }
 
-            _memoryCache.Set( _pokemonListCacheKey, pokemonList );
+            _memoryCache.Set( _settings.Value.ListCacheKey, pokemonList );
+            _fileCache.Set( _settings.Value.ListCacheKey, JsonConvert.SerializeObject( pokemonList ));
 
-            string pokemonListJson;
-            try {
-                pokemonListJson = JsonConvert.SerializeObject( pokemonList );
-            } catch ( JsonException ) {
-                //logger
-                return;
-            }
-
-            _fileCache.Set(_pokemonListCacheKey, pokemonListJson);
+            return pokemonList;
         }
 
         public bool TryGetPokemonByName( string pokemonName, out Pokemon pokemon ) {
+
+            if ( string.IsNullOrEmpty( pokemonName ) ) {
+                pokemon = null;
+                return false;
+            }
+
             if ( _memoryCache.TryGetValue( pokemonName, out pokemon ) ) {
                 return true;
             }
@@ -85,12 +75,12 @@ namespace PokedexCore.Services {
         }
 
         public bool TryGetPokemonList( out PokemonList pokemonList ) {
-            if ( _memoryCache.TryGetValue( _pokemonListCacheKey, out pokemonList ) ) {
+            if ( _memoryCache.TryGetValue( _settings.Value.ListCacheKey, out pokemonList ) ) {
                 return true; 
             }
 
             string pokemonListJson;
-            if ( _fileCache.TryGetValue( _pokemonListCacheKey, out pokemonListJson ) ) {
+            if ( _fileCache.TryGetValue( _settings.Value.ListCacheKey, out pokemonListJson ) ) {
                 if ( string.IsNullOrEmpty( pokemonListJson ) ) {
                     return false;
                 }
@@ -101,7 +91,7 @@ namespace PokedexCore.Services {
                     return false;
                 }
 
-                _memoryCache.Set(_pokemonListCacheKey, pokemonList);
+                _memoryCache.Set( _settings.Value.ListCacheKey, pokemonList );
 
                 return true;
             }

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace PokedexCore.Services {
     public class PokemonProvider : IPokemonProvider {
 
-        private IPokemonHttpClientAdapter _pokemonHttpClientAdapter;
-        private IPokemonCache _pokemonCache;
-        private IPokemonDbAdapter _pokemonDbAdapter;
+        private readonly IPokemonHttpClientAdapter _pokemonHttpClientAdapter;
+        private readonly IPokemonCache _pokemonCache;
+        private readonly IPokemonDbAdapter _pokemonDbAdapter;
 
         public PokemonProvider( IPokemonHttpClientAdapter pokemonHttpClientAdapter, IPokemonCache pokemonCache, IPokemonDbAdapter pokemonDbAdapter ) {
             _pokemonHttpClientAdapter = pokemonHttpClientAdapter;
@@ -37,6 +37,10 @@ namespace PokedexCore.Services {
         }
 
         public async Task<Pokemon> GetPokemonByName( string name ) {
+            if ( string.IsNullOrEmpty( name ) ) {
+                return null;
+            }
+
             Pokemon pokemon;
 
             if ( _pokemonCache.TryGetPokemonByName( name, out pokemon ) ) {
@@ -90,8 +94,7 @@ namespace PokedexCore.Services {
         }
 
         public void SaveFavoritePokemons( string userName, string[ ] favoritePokemons ) {
-
-            if ( favoritePokemons.Length == 0 ) {
+            if ( string.IsNullOrEmpty( userName ) || favoritePokemons == null || favoritePokemons.Length == 0) {
                 return;
             }
 

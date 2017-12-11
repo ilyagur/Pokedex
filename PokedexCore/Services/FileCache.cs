@@ -10,51 +10,56 @@ namespace PokedexCore.Services {
     public class FileCache : IFileCache {
         private readonly IOptions<CacheSettings> _settings;
         private readonly string _cacheFolderPath;
-        private Dictionary<string, ReaderWriterLockSlim> _fileLockCollection = new Dictionary<string, ReaderWriterLockSlim>();
-        private ReaderWriterLockSlim _fileLockCollectionLock = new ReaderWriterLockSlim();
+        private readonly Dictionary<string, ReaderWriterLockSlim> _fileLockCollection = new Dictionary<string, ReaderWriterLockSlim>();
+        private readonly ReaderWriterLockSlim _fileLockCollectionLock = new ReaderWriterLockSlim();
         public FileCache( IOptions<CacheSettings> settings ) {
             _settings = settings;
 
+            if ( _settings == null || _settings.Value == null ) {
+                throw new Exception( "AppSetting object is null" );
+            }
+
             if ( string.IsNullOrEmpty( _settings.Value.CacheFolder ) ) {
-                throw new Exception( "Cache folder cannot be null or empty. Check PokemonCacheFolder." );
+                throw new Exception( "PokemonCacheFolder cannot be an empty string" );
             }
 
             _cacheFolderPath = Path.Combine(Directory.GetCurrentDirectory(), _settings.Value.CacheFolder);
         }
 
-        public void Set( string key, string value ) {
+        public string Set( string key, string value ) {
+
+            if ( string.IsNullOrEmpty( key ) || string.IsNullOrEmpty( value ) ) {
+                return null;
+            }
 
             ReaderWriterLockSlim lockSlim = GetLockSlim(key);
 
             lockSlim.EnterWriteLock();
 
             try {
-                if ( String.IsNullOrEmpty( key ) ) {
-                    return;
-                }
-
-                string filePath = Path.Combine( _cacheFolderPath, $"{key}.json" );
-
-                File.WriteAllText( filePath, value );
+                File.WriteAllText( Path.Combine( _cacheFolderPath, $"{key}.json" ), value );
+                return value;
             } catch ( Exception ) {
                 //logger
             } finally {
                 lockSlim.ExitWriteLock();
             }
+
+            return null;
         }
 
         public bool TryGetValue( string key, out string value ) {
             value = string.Empty;
+
+            if ( string.IsNullOrEmpty( key ) ) {
+                return false;
+            }
 
             ReaderWriterLockSlim lockSlim = GetLockSlim(key);
 
             lockSlim.EnterReadLock();
 
             try {
-                if ( String.IsNullOrEmpty( key ) ) {
-                    return false;
-                }
-
                 string filePath = Path.Combine( _cacheFolderPath, $"{key}.json" );
 
                 if ( !File.Exists( filePath ) ) {

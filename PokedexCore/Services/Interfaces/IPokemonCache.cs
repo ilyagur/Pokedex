@@ -5,7 +5,7 @@ namespace PokedexCore.Services.Interfaces {
     {
         bool TryGetPokemonList( out PokemonList pokemonList );
         bool TryGetPokemonByName( string pokemonName, out Pokemon pokemon );
-        void SavePokemonList( PokemonList pokemonList );
-        void SavePokemon(Pokemon pokemon);
+        PokemonList SavePokemonList( PokemonList pokemonList );
+        Pokemon SavePokemon(Pokemon pokemon);
     }
 }
