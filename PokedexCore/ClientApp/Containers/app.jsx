@@ -22,8 +22,8 @@ class App extends Component {
 
 function mapStateToProps(state) {
     return {
-        pager: state.page.pager,
-        pokemons: state.pokemons.pokemons
+        pager: state.page,
+        pokemons: state.pokemons
     };
 }
 

@@ -44,3 +44,23 @@ export function changeItemsAmountPerPage(amout) {
         });
     }
 }
+
+function receivePokemons(json) {
+    return {
+        type: Constants.RECEIVE_POKEMONS,
+        payload: {
+            pokemons: json
+        }
+    };
+}
+
+export function getPokemons(count, skip) {
+    return (dispatch) => {
+        return fetch(`https://localhost:44365/api/Pokemon/GetPokemons/${count}/${skip}`)
+            .then(
+                response => response.json(),
+                error => console.log(error)
+            )
+            .then(json => dispatch(receivePokemons(json)))
+    };
+}
