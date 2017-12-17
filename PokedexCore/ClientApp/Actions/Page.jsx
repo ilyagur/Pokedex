@@ -39,6 +39,11 @@ export function changePageNumber(pageNumber) {
 export function changeItemsAmountPerPage(amout) {
     return (dispatch) => {
         dispatch({
+            type: Constants.CHANGE_PAGE_NUMBER,
+            payload: 1
+        });
+
+        dispatch({
             type: Constants.CHANGE_ITEMS_AMOUNT_PER_PAGE,
             payload: amout
         });

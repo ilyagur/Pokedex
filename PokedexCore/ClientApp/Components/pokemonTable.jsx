@@ -5,12 +5,19 @@ import Pager from './pager'
 
 class PokemonTable extends Component {
     render() {
-        const { pokemonsPerPage, pageNumber } = this.props.pager,
-            changePageNumber = this.props.pageActions.changePageNumber;
+        const pager = this.props.pager,
+            { pokemonsPerPage, currentPageNumber } = pager,
+            changePageNumber = this.props.pageActions.changePageNumber,
+            changeItemsAmountPerPage = this.props.pageActions.changeItemsAmountPerPage,
+            pokemons = this.props.pokemons;
 
-        let pokemons = this.props.pokemons, pokemonsLength = pokemons.length, i, j = 0, k = 0, rows = [], row = [];
+        let pokemonsLength = pokemons.length, i, j = 0, k = 0, rows = [], row = [];
 
-        for (i = 0; i < pokemonsLength; i++) {
+        for (i = (currentPageNumber - 1) * pokemonsPerPage; i < pokemonsPerPage * currentPageNumber; i++) {
+            if (i > pokemonsLength - 1) {
+                break;
+            }
+
             row[j++] = pokemons[i];
 
             if (row.length === 4) {
@@ -28,7 +35,8 @@ class PokemonTable extends Component {
 
         return (
             <div className="container">
-                <span>Current page number is {pageNumber}</span>
+                <span>Current page number is {currentPageNumber}</span>
+                <span>Items per page is {pokemonsPerPage}</span>
                 <div>
                     {
                         rows.map((row) => {
@@ -46,7 +54,7 @@ class PokemonTable extends Component {
                         })
                     }
                 </div>
-                <Pager pokemonsLength={pokemonsLength} pokemonsPerPage={pokemonsPerPage} changePageNumber={changePageNumber} pageNumber={pageNumber} />
+                <Pager pokemonsLength={pokemonsLength} pager={pager} changePageNumber={changePageNumber} changeItemsAmountPerPage={changeItemsAmountPerPage} />
             </div>
             );
     }
