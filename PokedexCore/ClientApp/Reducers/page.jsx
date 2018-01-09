@@ -3,9 +3,10 @@
 const initialState = {
     currentPageNumber: 1,
     pokemonsPerPage: 8,
-    typeFilters: [],
+    typeFilters: ['ground', 'fire', 'poison', 'grass', 'water', 'flying', 'bug', 'normal', 'fairy'],
     selectedTypeFilter: null,
-    perPageOptions: [8, 16, 24, 32]
+    perPageOptions: [8, 16, 24, 32],
+    pokemonsCount: 949
 }
 
 export default function reducer(state = initialState, action) {

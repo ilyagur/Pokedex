@@ -3,6 +3,7 @@ using PokedexCore.Models.Json;
 using PokedexCore.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PokedexCore.Services {
@@ -18,22 +19,39 @@ namespace PokedexCore.Services {
             _pokemonDbAdapter = pokemonDbAdapter;
         }
 
-        public async Task<PokemonList> GetPokemonList() {
+        public async Task<IList<Pokemon>> GetPokemons( int limit, int offset, string typeFilter ) {
             PokemonList pokemonList;
 
-            if ( _pokemonCache.TryGetPokemonList( out pokemonList ) ) {
-                return pokemonList;
+            if ( !_pokemonCache.TryGetPokemonList( out pokemonList ) ) {
+                pokemonList = await _pokemonHttpClientAdapter.GetPokemonList();
             }
-
-            pokemonList = await _pokemonHttpClientAdapter.GetPokemonList();
 
             if ( pokemonList == null ) {
                 return null;
             }
 
+            IList<PokemonBio> selectedPokemons = new List<PokemonBio>();
+            int i = 0;
+
+            while ( i < pokemonList.count && selectedPokemons.Count < limit + offset ) {
+                PokemonBio pokemonBio = pokemonList.results[i];
+
+                if ( pokemonBio.Pokemon == null ) {
+                    pokemonBio.Pokemon = await GetPokemonByName( pokemonBio.name );
+                }
+
+                if ( pokemonBio.Pokemon.types.Any( t => ( t.type.name.Trim().ToUpper() == typeFilter.Trim().ToUpper() || typeFilter.Trim().ToUpper() == "ALL" ) )) {
+                    selectedPokemons.Add( pokemonBio );
+                }
+
+                pokemonList.results[i] = pokemonBio;
+
+                i++;
+            }
+
             _pokemonCache.SavePokemonList( pokemonList );
 
-            return pokemonList;
+            return selectedPokemons.Select(p => p.Pokemon).Skip( offset ).Take( limit ).ToList(); ;
         }
 
         public async Task<Pokemon> GetPokemonByName( string name ) {

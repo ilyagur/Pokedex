@@ -10,7 +10,7 @@ class App extends Component {
     render() {
         const pokemons = this.props.pokemons,
             pager = this.props.pager,
-            pageActions = this.props.pageActions
+            pageActions = this.props.pageActions;
 
         return (
             <div>

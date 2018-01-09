@@ -4,6 +4,9 @@ import PokemonCard from './pokemonCard'
 import Pager from './pager'
 
 class PokemonTable extends Component {
+    componentDidMount() {
+        this.props.pageActions.changePageNumber(1);
+    }
     render() {
         const pager = this.props.pager,
             { pokemonsPerPage, currentPageNumber } = pager,
@@ -13,11 +16,8 @@ class PokemonTable extends Component {
 
         let pokemonsLength = pokemons.length, i, j = 0, k = 0, rows = [], row = [];
 
-        for (i = (currentPageNumber - 1) * pokemonsPerPage; i < pokemonsPerPage * currentPageNumber; i++) {
-            if (i > pokemonsLength - 1) {
-                break;
-            }
-
+        for (i = 0; i < pokemonsLength; i++) {
+            
             row[j++] = pokemons[i];
 
             if (row.length === 4) {
@@ -32,6 +32,13 @@ class PokemonTable extends Component {
         }
 
         i = 0;
+
+        var pagerComponentOptions = {
+            pokemonsLength,
+            pager,
+            changePageNumber,
+            changeItemsAmountPerPage
+        };
 
         return (
             <div className="container">
@@ -54,7 +61,7 @@ class PokemonTable extends Component {
                         })
                     }
                 </div>
-                <Pager pokemonsLength={pokemonsLength} pager={pager} changePageNumber={changePageNumber} changeItemsAmountPerPage={changeItemsAmountPerPage} />
+                <Pager options={pagerComponentOptions} />
             </div>
             );
     }

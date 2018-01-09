@@ -16,5 +16,6 @@ namespace PokedexCore.Models.Json {
     public class PokemonBio {
         public string url { get; set; }
         public string name { get; set; }
+        public Pokemon Pokemon { get; set; }
     }
 }

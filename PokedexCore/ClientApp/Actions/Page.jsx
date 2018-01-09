@@ -28,16 +28,18 @@ export function addPokemonToFavoriteById(id) {
 }
 
 export function changePageNumber(pageNumber) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch({
             type: Constants.CHANGE_PAGE_NUMBER,
             payload: pageNumber
         });
+
+        getPokemons(getState()).then(json => dispatch(receivePokemons(json)));
     }
 }
 
 export function changeItemsAmountPerPage(amout) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch({
             type: Constants.CHANGE_PAGE_NUMBER,
             payload: 1
@@ -47,6 +49,8 @@ export function changeItemsAmountPerPage(amout) {
             type: Constants.CHANGE_ITEMS_AMOUNT_PER_PAGE,
             payload: amout
         });
+
+        getPokemons(getState()).then(json => dispatch(receivePokemons(json)));
     }
 }
 
@@ -59,13 +63,16 @@ function receivePokemons(json) {
     };
 }
 
-export function getPokemons(count, skip) {
-    return (dispatch) => {
-        return fetch(`https://localhost:44365/api/Pokemon/GetPokemons/${count}/${skip}`)
-            .then(
-                response => response.json(),
-                error => console.log(error)
-            )
-            .then(json => dispatch(receivePokemons(json)))
-    };
+function getPokemons(state) {
+    let { currentPageNumber, pokemonsPerPage, selectedTypeFilter } = state.page;
+
+    let limit = pokemonsPerPage,
+        offset = (currentPageNumber - 1) * pokemonsPerPage,
+        filter = selectedTypeFilter || 'ALL';
+
+    return fetch(`https://localhost:44365/api/Pokemons/${limit}/${offset}/${filter}`)
+        .then(
+        response => response.json(),
+        error => console.log(error)
+        );
 }

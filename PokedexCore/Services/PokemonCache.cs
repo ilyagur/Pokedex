@@ -76,7 +76,7 @@ namespace PokedexCore.Services {
 
         public bool TryGetPokemonList( out PokemonList pokemonList ) {
             if ( _memoryCache.TryGetValue( _settings.Value.ListCacheKey, out pokemonList ) ) {
-                return true; 
+                return !(pokemonList == null); 
             }
 
             string pokemonListJson;

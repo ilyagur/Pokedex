@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace PokedexCore.Controllers.Api {
     [Authorize]
     [Produces( "application/json" )]
-    [Route( "api/Pokemon" )]
+    [Route( "api" )]
     public class PokemonController : BaseApiController {
         private IPokemonProvider _pokemonProvider;
 
@@ -23,46 +23,48 @@ namespace PokedexCore.Controllers.Api {
         }
 
         [AllowAnonymous]
-        [Route( "GetPokemons/{limit}/{offset}" )]
-        public async Task<JsonResult> GetPokemons( int limit, int offset ) {
+        [Route( "Pokemons/{limit}/{offset}/{typeFilter?}" )]
+        public async Task<JsonResult> GetPokemons( int limit = 20, int offset = 0, string typeFilter = "ALL" ) {
             if ( limit < 0 || offset < 0 ) {
                 //logger
                 return Json(null);
             }
 
-            PokemonList list;
-            try {
-                list = await _pokemonProvider.GetPokemonList();
-            } catch ( Exception ) {
-                //logger;
-                return Json(null);
-            }
+            return Json( await _pokemonProvider.GetPokemons(limit, offset, typeFilter) );
 
-            if ( list == null ) {
-                return Json(null);
-            }
+            //PokemonList list;
+            //try {
+            //    list = await _pokemonProvider.GetPokemonList();
+            //} catch ( Exception ) {
+            //    //logger;
+            //    return Json(null);
+            //}
 
-            IList<PokemonBio> selectedPokemons = list.results.Skip( offset ).Take( limit ).ToList();
+            //if ( list == null ) {
+            //    return Json(null);
+            //}
 
-            Pokemon pokemon;
-            IList<Pokemon> listOfFullPokemonInfo = new List<Pokemon>();
+            //IList<PokemonBio> selectedPokemons = list.results.Skip( offset ).Take( limit ).ToList();
 
-            foreach ( PokemonBio result in selectedPokemons ) {
-                try {
-                    pokemon = await _pokemonProvider.GetPokemonByName( result.name );
-                } catch ( Exception ) {
-                    //logger
-                    continue;
-                }
+            //Pokemon pokemon;
+            //IList<Pokemon> listOfFullPokemonInfo = new List<Pokemon>();
 
-                if ( pokemon == null ) {
-                    continue;
-                }
+            //foreach ( PokemonBio result in selectedPokemons ) {
+            //    try {
+            //        pokemon = await _pokemonProvider.GetPokemonByName( result.name );
+            //    } catch ( Exception ) {
+            //        //logger
+            //        continue;
+            //    }
 
-                listOfFullPokemonInfo.Add( pokemon );
-            }
+            //    if ( pokemon == null ) {
+            //        continue;
+            //    }
 
-            return Json( listOfFullPokemonInfo );
+            //    listOfFullPokemonInfo.Add( pokemon );
+            //}
+
+            //return Json( listOfFullPokemonInfo );
         }
 
         [Route( "GetFavoritePokemons" )]
@@ -85,7 +87,7 @@ namespace PokedexCore.Controllers.Api {
                 return BadRequest(e.Message);
             }
 
-            return Ok(); ;
+            return Ok();
         }
     }
 }
