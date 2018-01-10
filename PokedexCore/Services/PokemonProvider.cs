@@ -12,6 +12,7 @@ namespace PokedexCore.Services {
         private readonly IPokemonHttpClientAdapter _pokemonHttpClientAdapter;
         private readonly IPokemonCache _pokemonCache;
         private readonly IPokemonDbAdapter _pokemonDbAdapter;
+        private readonly Random _random = new Random();
 
         public PokemonProvider( IPokemonHttpClientAdapter pokemonHttpClientAdapter, IPokemonCache pokemonCache, IPokemonDbAdapter pokemonDbAdapter ) {
             _pokemonHttpClientAdapter = pokemonHttpClientAdapter;
@@ -20,11 +21,8 @@ namespace PokedexCore.Services {
         }
 
         public async Task<IList<Pokemon>> GetPokemons( int limit, int offset, string typeFilter ) {
-            PokemonList pokemonList;
 
-            if ( !_pokemonCache.TryGetPokemonList( out pokemonList ) ) {
-                pokemonList = await _pokemonHttpClientAdapter.GetPokemonList();
-            }
+            PokemonList pokemonList = await GetPokemonList();
 
             if ( pokemonList == null ) {
                 return null;
@@ -40,7 +38,7 @@ namespace PokedexCore.Services {
                     pokemonBio.Pokemon = await GetPokemonByName( pokemonBio.name );
                 }
 
-                if ( pokemonBio.Pokemon.types.Any( t => ( t.type.name.Trim().ToUpper() == typeFilter.Trim().ToUpper() || typeFilter.Trim().ToUpper() == "ALL" ) )) {
+                if ( IsPokemonApplicable(pokemonBio, typeFilter) ) {
                     selectedPokemons.Add( pokemonBio );
                 }
 
@@ -118,6 +116,52 @@ namespace PokedexCore.Services {
 
             string favoritePokemonsJson = JsonConvert.SerializeObject(favoritePokemons);
             _pokemonDbAdapter.SaveFavoritePokemons(userName, favoritePokemonsJson );
+        }
+
+        public async Task<IList<Pokemon>> GetSuggestedPokemons( int limit ) {
+
+            List<Pokemon> result = new List<Pokemon>();
+
+            for ( int i = 0; i < limit; i++ ) {
+                Pokemon pokemon = await GetRandomPokemon();
+
+                if ( pokemon == null ) {
+                    continue;
+                }
+
+                result.Add( pokemon );
+            }
+
+            return result;
+        }
+
+        private async Task<Pokemon> GetRandomPokemon() {
+            PokemonList pokemonList = await GetPokemonList();
+
+            if ( pokemonList == null ) {
+                return null;
+            }
+
+            PokemonBio pokemonBio = pokemonList.results[GetRandomNumber( 1, pokemonList.count - 1 )];
+            return pokemonBio.Pokemon ?? await GetPokemonByName( pokemonBio.name );
+        }
+
+        private int GetRandomNumber( int begin, int end ) {
+            return _random.Next(begin, end);
+        }
+
+        private bool IsPokemonApplicable( PokemonBio pokemonBio, string typeFilter ) {
+            return pokemonBio.Pokemon.types.Any( t => ( t.type.name.Trim().ToUpper() == typeFilter.Trim().ToUpper() || typeFilter.Trim().ToUpper() == "ALL" ) );
+        }
+
+        private async Task<PokemonList> GetPokemonList() {
+            PokemonList pokemonList;
+
+            if ( !_pokemonCache.TryGetPokemonList( out pokemonList ) ) {
+                pokemonList = await _pokemonHttpClientAdapter.GetPokemonList();
+            }
+
+            return pokemonList;
         }
     }
 }

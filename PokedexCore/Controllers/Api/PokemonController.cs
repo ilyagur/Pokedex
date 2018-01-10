@@ -67,6 +67,17 @@ namespace PokedexCore.Controllers.Api {
             //return Json( listOfFullPokemonInfo );
         }
 
+        [AllowAnonymous]
+        [Route( "SuggestPokemons/{limit}" )]
+        public async Task<JsonResult> GetSuggestedPokemons( int limit ) {
+            if ( limit < 0 ) {
+                //logger
+                return Json( null );
+            }
+
+            return Json( await _pokemonProvider.GetSuggestedPokemons( limit ) );
+        }
+
         [Route( "GetFavoritePokemons" )]
         public async Task<JsonResult> GetFavoritePokemons() {
             IList<Pokemon> listOfFullPokemonInfo = await _pokemonProvider.GetFavoritePokemons( UserName );

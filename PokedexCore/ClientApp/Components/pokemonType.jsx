@@ -25,6 +25,8 @@ class PokemonType extends Component {
                             case 'psychic': return (<h5 className="col-xs-3 col-lg-3" key={type.slot}><span className="label label-info">{typeName}</span></h5>)
                             case 'ice': return (<h5 className="col-xs-3 col-lg-3" key={type.slot}><span className="label label-info">{typeName}</span></h5>)
                             case 'ghost': return (<h5 className="col-xs-3 col-lg-3" key={type.slot}><span className="label label-default">{typeName}</span></h5>)
+                            case 'dark': return (<h5 className="col-xs-3 col-lg-3" key={type.slot}><span className="label label-default">{typeName}</span></h5>)
+                            case 'steel': return (<h5 className="col-xs-3 col-lg-3" key={type.slot}><span className="label label-default">{typeName}</span></h5>)
                             default: return (<h4 key={type.slot}><span>{type.type.name}</span></h4>)
                         }
                     })

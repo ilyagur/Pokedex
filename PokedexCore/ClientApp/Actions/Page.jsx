@@ -1,5 +1,23 @@
 ﻿import * as Constants from './../Constants/Page'
 
+export function showSuggestSpinner() {
+    return (dispatch) => {
+        dispatch({
+            type: Constants.SUGGEST_SPINNER_VISIBLE,
+            payload: true
+        });
+    }
+}
+
+export function hideSuggestSpinner() {
+    return (dispatch) => {
+        dispatch({
+            type: Constants.SUGGEST_SPINNER_VISIBLE,
+            payload: false
+        });
+    }
+}
+
 export function changePokemonTypeFilter(filter) {
     return (dispatch) => {
         dispatch({
@@ -10,11 +28,16 @@ export function changePokemonTypeFilter(filter) {
 }
 
 export function searchPokemonByName(name) {
-    return (dispatch) => {
-        dispatch({
-            type: Constants.SEARCH_POKEMON_BY_NAME,
-            payload: name
-        });
+    return (dispatch, getState) => {
+
+        let { pokemonsPerPage } = getState().page;
+
+        fetch(`https://localhost:44365/api/SearchPokemonByName/${name}/`)
+            .then(
+            response => response.json(),
+            error => console.log(error)
+        )
+            .then(json => dispatch(receivePokemons(json)));
     }
 }
 
@@ -34,7 +57,18 @@ export function changePageNumber(pageNumber) {
             payload: pageNumber
         });
 
-        getPokemons(getState()).then(json => dispatch(receivePokemons(json)));
+        let { currentPageNumber, pokemonsPerPage, selectedTypeFilter } = getState().page;
+
+        let limit = pokemonsPerPage,
+            offset = (currentPageNumber - 1) * pokemonsPerPage,
+            filter = selectedTypeFilter || 'ALL';
+
+        fetch(`https://localhost:44365/api/Pokemons/${limit}/${offset}/${filter}`)
+            .then(
+            response => response.json(),
+            error => console.log(error)
+            )
+            .then(json => dispatch(receivePokemons(json)));
     }
 }
 
@@ -50,7 +84,49 @@ export function changeItemsAmountPerPage(amout) {
             payload: amout
         });
 
-        getPokemons(getState()).then(json => dispatch(receivePokemons(json)));
+        let { currentPageNumber, pokemonsPerPage, selectedTypeFilter } = getState().page;
+
+        let limit = pokemonsPerPage,
+            offset = (currentPageNumber - 1) * pokemonsPerPage,
+            filter = selectedTypeFilter || 'ALL';
+
+        fetch(`https://localhost:44365/api/Pokemons/${limit}/${offset}/${filter}`)
+            .then(
+            response => response.json(),
+            error => console.log(error)
+        )
+            .then(json => dispatch(receivePokemons(json)));
+    }
+}
+
+export function suggestPokemons() {
+    return (dispatch, getState) => {
+
+        dispatch({
+            type: Constants.SUGGEST_SPINNER_VISIBLE,
+            payload: true
+        });
+
+        dispatch({
+            type: Constants.CHANGE_PAGE_NUMBER,
+            payload: 1
+        });
+
+        let { pokemonsPerPage } = getState().page;
+
+        fetch(`https://localhost:44365/api/SuggestPokemons/${pokemonsPerPage}/`)
+            .then(
+            response => response.json(),
+            error => console.log(error)
+        )
+            .then(json => {
+                dispatch(receivePokemons(json));
+
+                dispatch({
+                    type: Constants.SUGGEST_SPINNER_VISIBLE,
+                    payload: false
+                });
+            });
     }
 }
 
@@ -63,16 +139,3 @@ function receivePokemons(json) {
     };
 }
 
-function getPokemons(state) {
-    let { currentPageNumber, pokemonsPerPage, selectedTypeFilter } = state.page;
-
-    let limit = pokemonsPerPage,
-        offset = (currentPageNumber - 1) * pokemonsPerPage,
-        filter = selectedTypeFilter || 'ALL';
-
-    return fetch(`https://localhost:44365/api/Pokemons/${limit}/${offset}/${filter}`)
-        .then(
-        response => response.json(),
-        error => console.log(error)
-        );
-}

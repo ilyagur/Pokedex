@@ -42,8 +42,6 @@ class PokemonTable extends Component {
 
         return (
             <div className="container">
-                <span>Current page number is {currentPageNumber}</span>
-                <span>Items per page is {pokemonsPerPage}</span>
                 <div>
                     {
                         rows.map((row) => {
