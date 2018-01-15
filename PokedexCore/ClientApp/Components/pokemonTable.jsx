@@ -16,6 +16,17 @@ class PokemonTable extends Component {
 
         let pokemonsLength = pokemons.length, i, j = 0, k = 0, rows = [], row = [];
 
+        if (pokemonsLength == 1 && pokemons[0] == null) {
+            return (
+                <div className="panel panel-default vert-offset-top-3">
+                    <div className="panel-body">
+                        No Pokemons.
+                    </div>
+                </div>
+                );
+        }
+
+
         for (i = 0; i < pokemonsLength; i++) {
             
             row[j++] = pokemons[i];

@@ -13,11 +13,25 @@ namespace PokedexCore.Services {
         private readonly IPokemonCache _pokemonCache;
         private readonly IPokemonDbAdapter _pokemonDbAdapter;
         private readonly Random _random = new Random();
+        private PokemonList _pokemonList;
 
         public PokemonProvider( IPokemonHttpClientAdapter pokemonHttpClientAdapter, IPokemonCache pokemonCache, IPokemonDbAdapter pokemonDbAdapter ) {
             _pokemonHttpClientAdapter = pokemonHttpClientAdapter;
             _pokemonCache = pokemonCache;
             _pokemonDbAdapter = pokemonDbAdapter;
+        }
+
+        ~PokemonProvider() {
+
+        }
+
+        private PokemonList PokemonList {
+            get {
+                if(_pokemonList == null ) {
+                    _pokemonList = GetPokemonList().Result;
+                }
+                return _pokemonList;
+            }
         }
 
         public async Task<IList<Pokemon>> GetPokemons( int limit, int offset, string typeFilter ) {
@@ -57,21 +71,27 @@ namespace PokedexCore.Services {
                 return null;
             }
 
-            Pokemon pokemon;
+            PokemonList pokemonList = await GetPokemonList();
 
-            if ( _pokemonCache.TryGetPokemonByName( name, out pokemon ) ) {
-                return pokemon;
-            }
-
-            pokemon = await _pokemonHttpClientAdapter.GetPokemonByName(name);
-
-            if ( pokemon == null ) {
+            if ( pokemonList == null ) {
                 return null;
             }
 
-            _pokemonCache.SavePokemon(pokemon);
+            PokemonBio pokemonBio = pokemonList.results.FirstOrDefault( p => p.name == name.ToLowerInvariant().Trim() );
 
-            return pokemon;
+            if ( pokemonBio == null ) {
+                return null;
+            }
+
+            if ( pokemonBio.Pokemon != null ) {
+                return pokemonBio.Pokemon;
+            }
+
+            pokemonBio.Pokemon = await GetPokemonByNameAsync(name);
+
+            _pokemonCache.SavePokemonList( pokemonList );
+
+            return pokemonBio.Pokemon;
         }
 
         public async Task<IList<Pokemon>> GetFavoritePokemons( string userName ) {
@@ -135,6 +155,21 @@ namespace PokedexCore.Services {
             return result;
         }
 
+        private async Task<Pokemon> GetPokemonByNameAsync( string name ) {
+            Pokemon pokemon;
+
+            if ( _pokemonCache.TryGetPokemonByName( name, out pokemon ) ) {
+                return pokemon;
+            }
+
+            pokemon = await _pokemonHttpClientAdapter.GetPokemonByName( name );
+
+            if ( pokemon == null ) {
+                return null;
+            }
+
+            return pokemon;
+        }
         private async Task<Pokemon> GetRandomPokemon() {
             PokemonList pokemonList = await GetPokemonList();
 

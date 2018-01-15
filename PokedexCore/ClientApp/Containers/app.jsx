@@ -4,8 +4,9 @@ import { connect } from 'react-redux'
 
 import * as PageActions from './../Actions/Page'
 
-import PokemonTable from './../Components/pokemonTable'
-import SearchPanel from './../Components/SearchPanel'
+import PokemonTable from  './../Components/pokemonTable'
+import SearchPanel from   './../Components/searchPanel'
+import SuggestButton from './../Components/suggestButton'
 
 class App extends Component {
     render() {
@@ -17,16 +18,10 @@ class App extends Component {
             <div>
                 <div className="row vert-offset-top-1">
                     <div className="col-xs-offset-1 col-md-offset-1 col-md-xs-11 col-md-5">
-                        {
-                            pager.spinners.suggestSpinnerVisible ? (
-                                <img src="sfloading.gif" />
-                            ) : (
-                                <button type="button" onClick={pageActions.suggestPokemons} className="btn btn-danger">Suggest Pokemon</button>
-                            )
-                        }
+                        <SuggestButton suggestSpinnerVisible={pager.spinners.suggestSpinnerVisible} suggestPokemons={pageActions.suggestPokemons} />
                     </div>
                     <div className="col-xs-offset-1 col-md-offset-1 col-md-xs-11 col-md-5">
-                        <SearchPanel />
+                        <SearchPanel searchSpinnerVisible={pager.spinners.searchSpinnerVisible} searchPokemonByName={pageActions.searchPokemonByName} />
                     </div>
                 </div>
                 <PokemonTable pokemons={pokemons} pager={pager} pageActions={pageActions}/>

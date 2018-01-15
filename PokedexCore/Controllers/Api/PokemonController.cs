@@ -22,6 +22,7 @@ namespace PokedexCore.Controllers.Api {
             _pokemonProvider = provider;
         }
 
+        [HttpGet]
         [AllowAnonymous]
         [Route( "Pokemons/{limit}/{offset}/{typeFilter?}" )]
         public async Task<JsonResult> GetPokemons( int limit = 20, int offset = 0, string typeFilter = "ALL" ) {
@@ -30,43 +31,10 @@ namespace PokedexCore.Controllers.Api {
                 return Json(null);
             }
 
-            return Json( await _pokemonProvider.GetPokemons(limit, offset, typeFilter) );
-
-            //PokemonList list;
-            //try {
-            //    list = await _pokemonProvider.GetPokemonList();
-            //} catch ( Exception ) {
-            //    //logger;
-            //    return Json(null);
-            //}
-
-            //if ( list == null ) {
-            //    return Json(null);
-            //}
-
-            //IList<PokemonBio> selectedPokemons = list.results.Skip( offset ).Take( limit ).ToList();
-
-            //Pokemon pokemon;
-            //IList<Pokemon> listOfFullPokemonInfo = new List<Pokemon>();
-
-            //foreach ( PokemonBio result in selectedPokemons ) {
-            //    try {
-            //        pokemon = await _pokemonProvider.GetPokemonByName( result.name );
-            //    } catch ( Exception ) {
-            //        //logger
-            //        continue;
-            //    }
-
-            //    if ( pokemon == null ) {
-            //        continue;
-            //    }
-
-            //    listOfFullPokemonInfo.Add( pokemon );
-            //}
-
-            //return Json( listOfFullPokemonInfo );
+            return Json( await _pokemonProvider.GetPokemons( limit, offset, typeFilter ) );
         }
 
+        [HttpGet]
         [AllowAnonymous]
         [Route( "SuggestPokemons/{limit}" )]
         public async Task<JsonResult> GetSuggestedPokemons( int limit ) {
@@ -78,7 +46,20 @@ namespace PokedexCore.Controllers.Api {
             return Json( await _pokemonProvider.GetSuggestedPokemons( limit ) );
         }
 
-        [Route( "GetFavoritePokemons" )]
+        [HttpGet]
+        [AllowAnonymous]
+        [Route( "Pokemon/{name}" )]
+        public async Task<JsonResult> GetPokemonByName( string name ) {
+            if ( string.IsNullOrEmpty( name ) ) {
+                //logger;
+                return Json( null );
+            }
+
+            return Json(await _pokemonProvider.GetPokemonByName( name ) );
+        }
+
+        [HttpGet]
+        [Route( "FavoritePokemons/{limit}" )]
         public async Task<JsonResult> GetFavoritePokemons() {
             IList<Pokemon> listOfFullPokemonInfo = await _pokemonProvider.GetFavoritePokemons( UserName );
 
@@ -86,7 +67,7 @@ namespace PokedexCore.Controllers.Api {
         }
 
         [HttpPost]
-        [Route( "SaveFavoritePokemons" )]
+        [Route( "FavoritePokemons" )]
         public ActionResult SaveFavoritePokemons( [FromBody] string [] pokemons ) {
             if ( pokemons == null || pokemons.Length == 0 ) {
                 return NoContent();

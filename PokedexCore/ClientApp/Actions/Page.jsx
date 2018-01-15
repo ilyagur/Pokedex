@@ -1,23 +1,5 @@
 ﻿import * as Constants from './../Constants/Page'
 
-export function showSuggestSpinner() {
-    return (dispatch) => {
-        dispatch({
-            type: Constants.SUGGEST_SPINNER_VISIBLE,
-            payload: true
-        });
-    }
-}
-
-export function hideSuggestSpinner() {
-    return (dispatch) => {
-        dispatch({
-            type: Constants.SUGGEST_SPINNER_VISIBLE,
-            payload: false
-        });
-    }
-}
-
 export function changePokemonTypeFilter(filter) {
     return (dispatch) => {
         dispatch({
@@ -30,14 +12,41 @@ export function changePokemonTypeFilter(filter) {
 export function searchPokemonByName(name) {
     return (dispatch, getState) => {
 
-        let { pokemonsPerPage } = getState().page;
+        dispatch({
+            type: Constants.CHANGE_PAGE_NUMBER,
+            payload: 1
+        });
 
-        fetch(`https://localhost:44365/api/SearchPokemonByName/${name}/`)
+        dispatch({
+            type: Constants.SEARCH_SPINNER_VISIBLE,
+            payload: true
+        });
+
+        if (!name) {
+            getPokemons(getState()).then(json => dispatch(receivePokemons(json)));
+
+            dispatch({
+                type: Constants.SEARCH_SPINNER_VISIBLE,
+                payload: false
+            });
+
+            return;
+        }
+
+        fetch(`https://localhost:44365/api/Pokemon/${name}/`)
             .then(
             response => response.json(),
             error => console.log(error)
-        )
-            .then(json => dispatch(receivePokemons(json)));
+            )
+            .then(json => {
+                debugger;
+                dispatch(receivePokemons([json]));
+            })
+            .finally(f =>
+                dispatch({
+                    type: Constants.SEARCH_SPINNER_VISIBLE,
+                    payload: false
+                }));
     }
 }
 
@@ -57,18 +66,7 @@ export function changePageNumber(pageNumber) {
             payload: pageNumber
         });
 
-        let { currentPageNumber, pokemonsPerPage, selectedTypeFilter } = getState().page;
-
-        let limit = pokemonsPerPage,
-            offset = (currentPageNumber - 1) * pokemonsPerPage,
-            filter = selectedTypeFilter || 'ALL';
-
-        fetch(`https://localhost:44365/api/Pokemons/${limit}/${offset}/${filter}`)
-            .then(
-            response => response.json(),
-            error => console.log(error)
-            )
-            .then(json => dispatch(receivePokemons(json)));
+        getPokemons(getState()).then(json => dispatch(receivePokemons(json)));
     }
 }
 
@@ -84,18 +82,7 @@ export function changeItemsAmountPerPage(amout) {
             payload: amout
         });
 
-        let { currentPageNumber, pokemonsPerPage, selectedTypeFilter } = getState().page;
-
-        let limit = pokemonsPerPage,
-            offset = (currentPageNumber - 1) * pokemonsPerPage,
-            filter = selectedTypeFilter || 'ALL';
-
-        fetch(`https://localhost:44365/api/Pokemons/${limit}/${offset}/${filter}`)
-            .then(
-            response => response.json(),
-            error => console.log(error)
-        )
-            .then(json => dispatch(receivePokemons(json)));
+        getPokemons(getState()).then(json => dispatch(receivePokemons(json)));
     }
 }
 
@@ -118,16 +105,30 @@ export function suggestPokemons() {
             .then(
             response => response.json(),
             error => console.log(error)
-        )
+            )
             .then(json => {
                 dispatch(receivePokemons(json));
-
+            })
+            .finally(f =>
                 dispatch({
                     type: Constants.SUGGEST_SPINNER_VISIBLE,
                     payload: false
-                });
-            });
+                }));
     }
+}
+
+function getPokemons(state) {
+    let { currentPageNumber, pokemonsPerPage, selectedTypeFilter } = state.page;
+
+    let limit = pokemonsPerPage,
+        offset = (currentPageNumber - 1) * pokemonsPerPage,
+        filter = selectedTypeFilter || 'ALL';
+
+    return fetch(`https://localhost:44365/api/Pokemons/${limit}/${offset}/${filter}`)
+        .then(
+        response => response.json(),
+        error => console.log(error)
+        )
 }
 
 function receivePokemons(json) {
