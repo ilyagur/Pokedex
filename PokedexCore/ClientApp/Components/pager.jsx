@@ -3,10 +3,7 @@ import PropTypes from 'prop-types'
 
 class Pager extends Component {
     render() {
-        const { pokemonsPerPage, currentPageNumber, perPageOptions } = this.props.options.pager,
-            pokemonsLength = this.props.options.pokemonsLength,
-            changePageNumber = this.props.options.changePageNumber,
-            changeItemsAmountPerPage = this.props.options.changeItemsAmountPerPage;
+        const { pager: { pokemonsPerPage, currentPageNumber, perPageOptions }, pokemonsLength, changePageNumber, changeItemsAmountPerPage } = this.props.options
 
         var PrevPage = function () {
             changePageNumber(currentPageNumber - 1);

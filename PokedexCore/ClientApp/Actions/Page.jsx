@@ -1,13 +1,4 @@
-﻿import * as Constants from './../Constants/Page'
-
-export function changePokemonTypeFilter(filter) {
-    return (dispatch) => {
-        dispatch({
-            type: Constants.CHANGE_POKEMON_TYPE_FILTER,
-            payload: filter
-        });
-    }
-}
+﻿import * as Constants from './../Constants/All'
 
 export function searchPokemonByName(name) {
     return (dispatch, getState) => {
@@ -134,9 +125,7 @@ function getPokemons(state) {
 function receivePokemons(json) {
     return {
         type: Constants.RECEIVE_POKEMONS,
-        payload: {
-            pokemons: json
-        }
+        payload: json
     };
 }
 

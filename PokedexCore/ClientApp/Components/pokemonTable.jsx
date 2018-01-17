@@ -12,7 +12,7 @@ class PokemonTable extends Component {
             { pokemonsPerPage, currentPageNumber } = pager,
             changePageNumber = this.props.pageActions.changePageNumber,
             changeItemsAmountPerPage = this.props.pageActions.changeItemsAmountPerPage,
-            pokemons = this.props.pokemons;
+            pokemons = this.props.pokemons.pokemons;
 
         let pokemonsLength = pokemons.length, i, j = 0, k = 0, rows = [], row = [];
 

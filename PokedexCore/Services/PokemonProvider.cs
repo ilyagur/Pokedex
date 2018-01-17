@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace PokedexCore.Services {
-    public class PokemonProvider : IPokemonProvider {
+    public class PokemonProvider : IPokemonProvider, IDisposable {
 
         private readonly IPokemonHttpClientAdapter _pokemonHttpClientAdapter;
         private readonly IPokemonCache _pokemonCache;
@@ -21,8 +21,8 @@ namespace PokedexCore.Services {
             _pokemonDbAdapter = pokemonDbAdapter;
         }
 
-        ~PokemonProvider() {
-
+        public int DownloadedPokemonCount() {
+            return PokemonList.results.Where( p => p.Pokemon != null ).Count();
         }
 
         private PokemonList PokemonList {
@@ -36,17 +36,15 @@ namespace PokedexCore.Services {
 
         public async Task<IList<Pokemon>> GetPokemons( int limit, int offset, string typeFilter ) {
 
-            PokemonList pokemonList = await GetPokemonList();
-
-            if ( pokemonList == null ) {
+            if ( PokemonList == null ) {
                 return null;
             }
 
             IList<PokemonBio> selectedPokemons = new List<PokemonBio>();
             int i = 0;
 
-            while ( i < pokemonList.count && selectedPokemons.Count < limit + offset ) {
-                PokemonBio pokemonBio = pokemonList.results[i];
+            while ( i < PokemonList.count && selectedPokemons.Count < limit + offset ) {
+                PokemonBio pokemonBio = PokemonList.results[i];
 
                 if ( pokemonBio.Pokemon == null ) {
                     pokemonBio.Pokemon = await GetPokemonByName( pokemonBio.name );
@@ -56,12 +54,8 @@ namespace PokedexCore.Services {
                     selectedPokemons.Add( pokemonBio );
                 }
 
-                pokemonList.results[i] = pokemonBio;
-
                 i++;
             }
-
-            _pokemonCache.SavePokemonList( pokemonList );
 
             return selectedPokemons.Select(p => p.Pokemon).Skip( offset ).Take( limit ).ToList(); ;
         }
@@ -71,13 +65,11 @@ namespace PokedexCore.Services {
                 return null;
             }
 
-            PokemonList pokemonList = await GetPokemonList();
-
-            if ( pokemonList == null ) {
+            if ( PokemonList == null ) {
                 return null;
             }
 
-            PokemonBio pokemonBio = pokemonList.results.FirstOrDefault( p => p.name == name.ToLowerInvariant().Trim() );
+            PokemonBio pokemonBio = PokemonList.results.FirstOrDefault( p => p.name == name.ToLowerInvariant().Trim() );
 
             if ( pokemonBio == null ) {
                 return null;
@@ -88,8 +80,6 @@ namespace PokedexCore.Services {
             }
 
             pokemonBio.Pokemon = await GetPokemonByNameAsync(name);
-
-            _pokemonCache.SavePokemonList( pokemonList );
 
             return pokemonBio.Pokemon;
         }
@@ -168,16 +158,16 @@ namespace PokedexCore.Services {
                 return null;
             }
 
+            _pokemonCache.SavePokemon(pokemon);
+
             return pokemon;
         }
         private async Task<Pokemon> GetRandomPokemon() {
-            PokemonList pokemonList = await GetPokemonList();
-
-            if ( pokemonList == null ) {
+            if ( PokemonList == null ) {
                 return null;
             }
 
-            PokemonBio pokemonBio = pokemonList.results[GetRandomNumber( 1, pokemonList.count - 1 )];
+            PokemonBio pokemonBio = PokemonList.results[GetRandomNumber( 1, PokemonList.count - 1 )];
             return pokemonBio.Pokemon ?? await GetPokemonByName( pokemonBio.name );
         }
 
@@ -197,6 +187,10 @@ namespace PokedexCore.Services {
             }
 
             return pokemonList;
+        }
+
+        public void Dispose() {
+            _pokemonCache.SavePokemonList( _pokemonList );
         }
     }
 }

@@ -24,6 +24,13 @@ namespace PokedexCore.Controllers.Api {
 
         [HttpGet]
         [AllowAnonymous]
+        [Route( "Pokemons/Count" )]
+        public int DownloadedPokemonCount() {
+            return  _pokemonProvider.DownloadedPokemonCount();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         [Route( "Pokemons/{limit}/{offset}/{typeFilter?}" )]
         public async Task<JsonResult> GetPokemons( int limit = 20, int offset = 0, string typeFilter = "ALL" ) {
             if ( limit < 0 || offset < 0 ) {

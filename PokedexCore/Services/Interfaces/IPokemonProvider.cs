@@ -10,5 +10,6 @@ namespace PokedexCore.Services.Interfaces {
         Task<IList<Pokemon>> GetSuggestedPokemons( int limit );
         Task<Pokemon> GetPokemonByName( string name );
         void SaveFavoritePokemons( string userName, string[ ] favoritePokemons);
+        int DownloadedPokemonCount();
     }
 }

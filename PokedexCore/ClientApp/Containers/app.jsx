@@ -3,16 +3,16 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import * as PageActions from './../Actions/Page'
+import * as PokemonActions from './../Actions/Pokemon'
 
 import PokemonTable from  './../Components/pokemonTable'
 import SearchPanel from   './../Components/searchPanel'
 import SuggestButton from './../Components/suggestButton'
+import PokemonFilter from './../Components/pokemonFilter'
 
 class App extends Component {
     render() {
-        const pokemons = this.props.pokemons,
-            pager = this.props.pager,
-            pageActions = this.props.pageActions;
+        const { pokemons, pager, pageActions, pokemonActions } = this.props;
 
         return (
             <div>
@@ -24,6 +24,7 @@ class App extends Component {
                         <SearchPanel searchSpinnerVisible={pager.spinners.searchSpinnerVisible} searchPokemonByName={pageActions.searchPokemonByName} />
                     </div>
                 </div>
+                <PokemonFilter typeFilters={pokemons.typeFilters} changePokemonTypeFilter={pokemonActions.changePokemonTypeFilter} selectedTypeFilter={pokemons.selectedTypeFilter} />
                 <PokemonTable pokemons={pokemons} pager={pager} pageActions={pageActions}/>
             </div>
             );
@@ -39,7 +40,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        pageActions: bindActionCreators(PageActions, dispatch)
+        pageActions: bindActionCreators(PageActions, dispatch),
+        pokemonActions: bindActionCreators(PokemonActions, dispatch),
     }
 }
 
