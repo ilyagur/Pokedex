@@ -1,18 +1,11 @@
 ﻿import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import PokemonCard from './pokemonCard'
-import Pager from './pager'
 
 class PokemonTable extends Component {
-    componentDidMount() {
-        this.props.pageActions.changePageNumber(1);
-    }
     render() {
-        const pager = this.props.pager,
-            { pokemonsPerPage, currentPageNumber } = pager,
-            changePageNumber = this.props.pageActions.changePageNumber,
-            changeItemsAmountPerPage = this.props.pageActions.changeItemsAmountPerPage,
-            pokemons = this.props.pokemons.pokemons;
+        const { pokemons } = this.props;
 
         let pokemonsLength = pokemons.length, i, j = 0, k = 0, rows = [], row = [];
 
@@ -25,7 +18,6 @@ class PokemonTable extends Component {
                 </div>
                 );
         }
-
 
         for (i = 0; i < pokemonsLength; i++) {
             
@@ -42,22 +34,13 @@ class PokemonTable extends Component {
             }
         }
 
-        i = 0;
-
-        var pagerComponentOptions = {
-            pokemonsLength,
-            pager,
-            changePageNumber,
-            changeItemsAmountPerPage
-        };
-
         return (
             <div className="container">
                 <div>
                     {
-                        rows.map((row) => {
+                        rows.map((row, r) => {
                             return (
-                                <div key={i++} className="row vert-offset-top-3">
+                                <div key={r} className="row vert-offset-top-3">
                                     {
                                         row.map((pokemon) => {
                                             return (
@@ -70,10 +53,13 @@ class PokemonTable extends Component {
                         })
                     }
                 </div>
-                <Pager options={pagerComponentOptions} />
             </div>
             );
     }
+}
+
+PokemonTable.propTypes = {
+    pokemons: PropTypes.array,
 }
 
 export default PokemonTable

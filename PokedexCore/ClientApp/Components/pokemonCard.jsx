@@ -5,7 +5,7 @@ import PokemonType from './pokemonType'
 
 class PokemonCard extends Component {
     render() {
-        let pokemon = this.props.pokemon
+        const pokemon = this.props.pokemon
 
         return (
 

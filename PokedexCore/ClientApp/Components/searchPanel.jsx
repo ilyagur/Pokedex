@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class SearchPanel extends Component {
     constructor(props) {
@@ -36,6 +37,11 @@ class SearchPanel extends Component {
             </div>
         );
     }
+}
+
+SearchPanel.propTypes = {
+    searchSpinnerVisible: PropTypes.bool.isRequired,
+    searchPokemonByName: PropTypes.func.isRequired,
 }
 
 export default SearchPanel

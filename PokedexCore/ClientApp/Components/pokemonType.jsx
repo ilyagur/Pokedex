@@ -38,7 +38,7 @@ class PokemonType extends Component {
 }
 
 PokemonType.propTypes = {
-    types: PropTypes.array.isRequired
+    types: PropTypes.array.isRequired,
 }
 
 export default PokemonType

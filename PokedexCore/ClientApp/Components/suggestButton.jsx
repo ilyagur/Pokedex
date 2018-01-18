@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class SuggestButton extends Component {
     render() {
@@ -13,6 +14,11 @@ class SuggestButton extends Component {
                 )
         );
     }
+}
+
+SuggestButton.propTypes = {
+    suggestSpinnerVisible: PropTypes.bool.isRequired,
+    suggestPokemons: PropTypes.func.isRequired,
 }
 
 export default SuggestButton

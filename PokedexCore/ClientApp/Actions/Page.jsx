@@ -30,7 +30,6 @@ export function searchPokemonByName(name) {
             error => console.log(error)
             )
             .then(json => {
-                debugger;
                 dispatch(receivePokemons([json]));
             })
             .finally(f =>
