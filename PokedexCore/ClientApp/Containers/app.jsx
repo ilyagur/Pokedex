@@ -28,6 +28,7 @@ class App extends Component {
                 spinners: {
                     suggestSpinnerVisible,
                     searchSpinnerVisible,
+                    filterSpinnerVisible,
                 },
                 perPageOptions,
                 pokemonsPerPage,
@@ -55,7 +56,7 @@ class App extends Component {
                 </div>
                 <div className="row vert-offset-top-1">
                     <div className="col-xs-offset-1 col-md-offset-1 col-xs-11 col-md-11">
-                        <PokemonFilter typeFilters={typeFilters} changePokemonTypeFilter={changePokemonTypeFilter} selectedTypeFilter={selectedTypeFilter} />
+                        <PokemonFilter typeFilters={typeFilters} changePokemonTypeFilter={changePokemonTypeFilter} selectedTypeFilter={selectedTypeFilter} filterSpinnerVisible={filterSpinnerVisible} />
                     </div>
                 </div>
                 <div className="row vert-offset-top-1">

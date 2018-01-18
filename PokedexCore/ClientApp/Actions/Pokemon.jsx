@@ -4,12 +4,25 @@ import { changePageNumber } from './Page'
 
 export function changePokemonTypeFilter(filter) {
     return (dispatch, getState) => {
+
+        dispatch({
+            type: Constants.FILTER_SPINNER_VISIBLE,
+            payload: true
+        });
+
         dispatch({
             type: Constants.CHANGE_POKEMON_TYPE_FILTER,
             payload: filter
         });
 
-        getPokemons(getState()).then(json => dispatch(receivePokemons(json)));
+        getPokemons(getState())
+            .then(json => dispatch(receivePokemons(json)))
+            .finally(f => {
+                dispatch({
+                    type: Constants.FILTER_SPINNER_VISIBLE,
+                    payload: false
+                });
+            });
     }
 }
 
