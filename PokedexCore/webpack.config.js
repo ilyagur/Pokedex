@@ -4,7 +4,7 @@ var WebpackNotifierPlugin = require('webpack-notifier');
 var Path = require('path');
 
 module.exports = {
-    entry: "./ClientApp/app.jsx",
+    entry: "./ClientApp/root.jsx",
     output: {
         filename: "./wwwroot/js/bundle.js"
     },
