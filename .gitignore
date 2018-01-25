@@ -17,3 +17,5 @@
 /PokedexCore/wwwroot/js/bundle.js
 /PokedexCore.Tests/bin/Debug/netcoreapp2.0
 /PokedexCore.Tests/obj
+/PokedexCore.Manual/bin/Debug/netcoreapp2.0
+/PokedexCore.Manual/obj

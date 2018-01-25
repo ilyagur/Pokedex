@@ -11,8 +11,9 @@ class Header extends Component {
                             <a href="/Home/Index" className="navbar-brand">React Pokedex</a>
                         </div>
                         <div className="navbar-collapse collapse">
-                            <ul className="nav navbar-nav">
-                                <li><a href="/Home/Index">Home</a></li>
+                            <ul className="nav navbar-nav navbar-right">
+                                <li><a href="/Account/Register">Register</a></li>
+                                <li><a href="Account/Login">Log in</a></li>
                             </ul>
                         </div>
                     </div>
