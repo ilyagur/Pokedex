@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using PokedexCore.Manual.Auth;
 
-namespace PokedexCore.Manual.Helpers
-{
-    public class InjectedDependencies
-    {
+namespace PokedexCore.Manual.Helpers {
+    public static class InjectedDependencies {
+        public static void AddDependencies( this IServiceCollection services ) {
+            services.AddSingleton<IJwtFactory, JwtFactory>();
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+        }
     }
 }

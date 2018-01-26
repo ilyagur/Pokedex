@@ -20,11 +20,15 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using PokedexCore.Manual.Models;
+using PokedexCore.Manual.Helpers;
 
 namespace PokedexCore.Manual
 {
     public class Startup
     {
+        private const string SecretKey = "iNivDmHLpUA223sqsfhqGbMRdRj1PVkH"; // todo: get this from somewhere secure
+        private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey( Encoding.ASCII.GetBytes( SecretKey ) );
+
         public Startup( IConfiguration configuration ) {
             Configuration = configuration;
         }
@@ -39,8 +43,56 @@ namespace PokedexCore.Manual
                 options.UseSqlServer( Configuration.GetConnectionString( "DefaultConnection" ),
                 b => b.MigrationsAssembly( "PokedexCore.Manual" ) ) );
 
+            services.AddDependencies();
+
+            // Register the ConfigurationBuilder instance of FacebookAuthSettings
+            //services.Configure<FacebookAuthSettings>( Configuration.GetSection( nameof( FacebookAuthSettings ) ) );
+
+            var jwtAppSettingOptions = Configuration.GetSection( nameof( JwtIssuerOptions ) );
+
+            // Configure JwtIssuerOptions
+            services.Configure<JwtIssuerOptions>( options =>
+            {
+                options.Issuer = jwtAppSettingOptions[nameof( JwtIssuerOptions.Issuer )];
+                options.Audience = jwtAppSettingOptions[nameof( JwtIssuerOptions.Audience )];
+                options.SigningCredentials = new SigningCredentials( _signingKey, SecurityAlgorithms.HmacSha256 );
+            } );
+
+            var tokenValidationParameters = new TokenValidationParameters {
+                ValidateIssuer = true,
+                ValidIssuer = jwtAppSettingOptions[nameof( JwtIssuerOptions.Issuer )],
+
+                ValidateAudience = true,
+                ValidAudience = jwtAppSettingOptions[nameof( JwtIssuerOptions.Audience )],
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = _signingKey,
+
+                RequireExpirationTime = false,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            services.AddAuthentication( options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            } ).AddJwtBearer( configureOptions =>
+            {
+                configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof( JwtIssuerOptions.Issuer )];
+                configureOptions.TokenValidationParameters = tokenValidationParameters;
+                configureOptions.SaveToken = true;
+            } );
+
+            // api user claim policy
+            services.AddAuthorization( options =>
+            {
+                options.AddPolicy( "ApiUser", policy => policy.RequireClaim( Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess ) );
+            } );
+
             services.AddMvc();
-            //services.AddDependencies();
+
             var builder = services.AddIdentityCore<AppUser>( o =>
             {
                 // configure identity options

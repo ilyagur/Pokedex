@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PokedexCore.Manual.Models;
-using PokedexCore.Manual.Models.ViewModels;
-using AutoMapper;
 using PokedexCore.Manual.Data;
 using PokedexCore.Manual.Helpers;
+using PokedexCore.Manual.Models;
+using PokedexCore.Manual.Models.ViewModels;
+using System.Threading.Tasks;
 
-namespace PokedexCore.Manual.Controllers
-{
+namespace PokedexCore.Manual.Controllers {
     [Route( "api/[controller]" )]
     public class AccountController : Controller
     {
