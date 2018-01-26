@@ -19,3 +19,4 @@
 /PokedexCore.Tests/obj
 /PokedexCore.Manual/bin/Debug/netcoreapp2.0
 /PokedexCore.Manual/obj
+/PokedexCore.Manual/PokemonCache
