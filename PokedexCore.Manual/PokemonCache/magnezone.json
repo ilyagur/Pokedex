@@ -1,1 +1,0 @@
-{"name":"magnezone","weight":1800,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/462.png"},"height":12,"id":462,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/9/","name":"steel"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/13/","name":"electric"}}]}

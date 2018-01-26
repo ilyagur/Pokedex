@@ -1,1 +1,0 @@
-{"name":"sneasel","weight":280,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/215.png"},"height":9,"id":215,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/15/","name":"ice"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/17/","name":"dark"}}]}

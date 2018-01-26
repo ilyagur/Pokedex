@@ -1,1 +1,0 @@
-{"name":"pupitar","weight":1520,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/247.png"},"height":12,"id":247,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/5/","name":"ground"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/6/","name":"rock"}}]}

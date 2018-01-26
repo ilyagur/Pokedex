@@ -1,1 +1,0 @@
-{"name":"gabite","weight":560,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/444.png"},"height":14,"id":444,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/5/","name":"ground"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/16/","name":"dragon"}}]}

@@ -1,1 +1,0 @@
-{"name":"weavile","weight":340,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/461.png"},"height":11,"id":461,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/15/","name":"ice"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/17/","name":"dark"}}]}

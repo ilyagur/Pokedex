@@ -1,1 +1,0 @@
-{"name":"nidoqueen","weight":600,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/31.png"},"height":13,"id":31,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/5/","name":"ground"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}}]}

@@ -1,1 +1,0 @@
-{"name":"diglett","weight":8,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png"},"height":2,"id":50,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/5/","name":"ground"}}]}

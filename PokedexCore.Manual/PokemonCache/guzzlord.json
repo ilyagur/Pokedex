@@ -1,1 +1,0 @@
-{"name":"guzzlord","weight":8880,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/799.png"},"height":55,"id":799,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/16/","name":"dragon"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/17/","name":"dark"}}]}

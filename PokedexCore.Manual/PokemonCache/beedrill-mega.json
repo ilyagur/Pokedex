@@ -1,1 +1,0 @@
-{"name":"beedrill-mega","weight":405,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10090.png"},"height":14,"id":10090,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/7/","name":"bug"}}]}

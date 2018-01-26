@@ -1,1 +1,0 @@
-{"name":"breloom","weight":392,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/286.png"},"height":12,"id":286,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/2/","name":"fighting"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/12/","name":"grass"}}]}

@@ -1,1 +1,0 @@
-{"name":"latios-mega","weight":700,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10063.png"},"height":23,"id":10063,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/14/","name":"psychic"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/16/","name":"dragon"}}]}

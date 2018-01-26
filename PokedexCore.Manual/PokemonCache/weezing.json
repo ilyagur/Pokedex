@@ -1,1 +1,0 @@
-{"name":"weezing","weight":95,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/110.png"},"height":12,"id":110,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}}]}

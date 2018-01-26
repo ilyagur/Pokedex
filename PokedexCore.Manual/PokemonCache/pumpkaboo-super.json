@@ -1,1 +1,0 @@
-{"name":"pumpkaboo-super","weight":150,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10029.png"},"height":8,"id":10029,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/12/","name":"grass"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/8/","name":"ghost"}}]}

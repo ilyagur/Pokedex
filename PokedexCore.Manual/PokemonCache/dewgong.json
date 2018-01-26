@@ -1,1 +1,0 @@
-{"name":"dewgong","weight":1200,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/87.png"},"height":17,"id":87,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/15/","name":"ice"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

@@ -1,1 +1,0 @@
-{"name":"deerling","weight":195,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/585.png"},"height":6,"id":585,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/12/","name":"grass"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/1/","name":"normal"}}]}

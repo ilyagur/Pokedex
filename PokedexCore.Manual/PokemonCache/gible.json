@@ -1,1 +1,0 @@
-{"name":"gible","weight":205,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/443.png"},"height":7,"id":443,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/5/","name":"ground"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/16/","name":"dragon"}}]}

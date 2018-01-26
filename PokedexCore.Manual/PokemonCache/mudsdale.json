@@ -1,1 +1,0 @@
-{"name":"mudsdale","weight":9200,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/750.png"},"height":25,"id":750,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/5/","name":"ground"}}]}

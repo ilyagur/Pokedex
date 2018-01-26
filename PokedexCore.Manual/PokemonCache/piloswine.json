@@ -1,1 +1,0 @@
-{"name":"piloswine","weight":558,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/221.png"},"height":11,"id":221,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/5/","name":"ground"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/15/","name":"ice"}}]}

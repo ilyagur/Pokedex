@@ -1,1 +1,0 @@
-{"name":"aegislash-shield","weight":530,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/681.png"},"height":17,"id":681,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/8/","name":"ghost"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/9/","name":"steel"}}]}

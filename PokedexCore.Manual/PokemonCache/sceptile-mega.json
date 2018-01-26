@@ -1,1 +1,0 @@
-{"name":"sceptile-mega","weight":552,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10065.png"},"height":19,"id":10065,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/16/","name":"dragon"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/12/","name":"grass"}}]}

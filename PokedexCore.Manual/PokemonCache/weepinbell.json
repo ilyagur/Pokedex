@@ -1,1 +1,0 @@
-{"name":"weepinbell","weight":64,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/70.png"},"height":10,"id":70,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/12/","name":"grass"}}]}
