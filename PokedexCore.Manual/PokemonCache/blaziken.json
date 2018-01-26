@@ -1,0 +1,1 @@
+{"name":"blaziken","weight":520,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/257.png"},"height":19,"id":257,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/2/","name":"fighting"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/10/","name":"fire"}}]}

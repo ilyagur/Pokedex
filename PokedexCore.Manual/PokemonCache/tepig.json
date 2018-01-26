@@ -1,0 +1,1 @@
+{"name":"tepig","weight":99,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/498.png"},"height":5,"id":498,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/10/","name":"fire"}}]}

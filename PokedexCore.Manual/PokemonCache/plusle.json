@@ -1,0 +1,1 @@
+{"name":"plusle","weight":42,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/311.png"},"height":4,"id":311,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/13/","name":"electric"}}]}

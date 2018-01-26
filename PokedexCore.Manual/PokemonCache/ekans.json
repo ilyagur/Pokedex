@@ -1,0 +1,1 @@
+{"name":"ekans","weight":69,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/23.png"},"height":20,"id":23,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}}]}

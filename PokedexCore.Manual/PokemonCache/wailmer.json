@@ -1,0 +1,1 @@
+{"name":"wailmer","weight":1300,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/320.png"},"height":20,"id":320,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

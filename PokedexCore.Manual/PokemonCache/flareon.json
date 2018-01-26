@@ -1,0 +1,1 @@
+{"name":"flareon","weight":250,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/136.png"},"height":9,"id":136,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/10/","name":"fire"}}]}

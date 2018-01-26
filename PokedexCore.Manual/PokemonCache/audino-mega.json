@@ -1,0 +1,1 @@
+{"name":"audino-mega","weight":320,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10069.png"},"height":15,"id":10069,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/18/","name":"fairy"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/1/","name":"normal"}}]}

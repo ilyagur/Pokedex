@@ -1,0 +1,1 @@
+{"name":"drapion","weight":615,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/452.png"},"height":13,"id":452,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/17/","name":"dark"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}}]}

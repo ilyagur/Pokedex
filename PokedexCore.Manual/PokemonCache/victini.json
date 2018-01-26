@@ -1,0 +1,1 @@
+{"name":"victini","weight":40,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/494.png"},"height":4,"id":494,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/10/","name":"fire"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/14/","name":"psychic"}}]}

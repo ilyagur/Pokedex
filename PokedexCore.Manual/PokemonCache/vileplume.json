@@ -1,0 +1,1 @@
+{"name":"vileplume","weight":186,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/45.png"},"height":12,"id":45,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/12/","name":"grass"}}]}

@@ -1,0 +1,1 @@
+{"name":"swalot","weight":800,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/317.png"},"height":17,"id":317,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}}]}

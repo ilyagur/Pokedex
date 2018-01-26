@@ -1,0 +1,1 @@
+{"name":"machop","weight":195,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/66.png"},"height":8,"id":66,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/2/","name":"fighting"}}]}

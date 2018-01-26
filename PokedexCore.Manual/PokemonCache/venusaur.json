@@ -1,0 +1,1 @@
+{"name":"venusaur","weight":1000,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"},"height":20,"id":3,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/12/","name":"grass"}}]}

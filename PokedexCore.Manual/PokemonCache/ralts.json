@@ -1,0 +1,1 @@
+{"name":"ralts","weight":66,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/280.png"},"height":4,"id":280,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/18/","name":"fairy"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/14/","name":"psychic"}}]}

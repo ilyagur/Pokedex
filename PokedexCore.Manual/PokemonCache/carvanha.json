@@ -1,0 +1,1 @@
+{"name":"carvanha","weight":208,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/318.png"},"height":8,"id":318,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/17/","name":"dark"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

@@ -1,0 +1,1 @@
+{"name":"arbok","weight":650,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/24.png"},"height":35,"id":24,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}}]}

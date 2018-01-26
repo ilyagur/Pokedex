@@ -1,0 +1,1 @@
+{"name":"barboach","weight":19,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/339.png"},"height":4,"id":339,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/5/","name":"ground"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

@@ -1,0 +1,1 @@
+{"name":"tentacool","weight":455,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/72.png"},"height":9,"id":72,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

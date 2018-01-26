@@ -1,0 +1,1 @@
+{"name":"phanpy","weight":335,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/231.png"},"height":5,"id":231,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/5/","name":"ground"}}]}

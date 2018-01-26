@@ -1,0 +1,1 @@
+{"name":"chimecho","weight":10,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/358.png"},"height":6,"id":358,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/14/","name":"psychic"}}]}

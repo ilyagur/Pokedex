@@ -1,0 +1,1 @@
+{"name":"groudon","weight":9500,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/383.png"},"height":35,"id":383,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/5/","name":"ground"}}]}

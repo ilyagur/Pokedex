@@ -1,0 +1,1 @@
+{"name":"latias","weight":400,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/380.png"},"height":14,"id":380,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/14/","name":"psychic"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/16/","name":"dragon"}}]}

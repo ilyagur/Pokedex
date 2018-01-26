@@ -1,0 +1,1 @@
+{"name":"mienfoo","weight":200,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/619.png"},"height":9,"id":619,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/2/","name":"fighting"}}]}

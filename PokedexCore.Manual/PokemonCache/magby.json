@@ -1,0 +1,1 @@
+{"name":"magby","weight":214,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/240.png"},"height":7,"id":240,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/10/","name":"fire"}}]}

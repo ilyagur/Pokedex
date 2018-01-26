@@ -1,0 +1,1 @@
+{"name":"krookodile","weight":963,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/553.png"},"height":15,"id":553,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/17/","name":"dark"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/5/","name":"ground"}}]}

@@ -1,0 +1,1 @@
+{"name":"heracross","weight":540,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/214.png"},"height":15,"id":214,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/2/","name":"fighting"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/7/","name":"bug"}}]}

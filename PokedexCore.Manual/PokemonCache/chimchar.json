@@ -1,0 +1,1 @@
+{"name":"chimchar","weight":62,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/390.png"},"height":5,"id":390,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/10/","name":"fire"}}]}

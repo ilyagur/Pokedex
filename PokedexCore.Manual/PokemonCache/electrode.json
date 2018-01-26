@@ -1,0 +1,1 @@
+{"name":"electrode","weight":666,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/101.png"},"height":12,"id":101,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/13/","name":"electric"}}]}

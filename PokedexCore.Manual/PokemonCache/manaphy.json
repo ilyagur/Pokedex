@@ -1,0 +1,1 @@
+{"name":"manaphy","weight":14,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/490.png"},"height":3,"id":490,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

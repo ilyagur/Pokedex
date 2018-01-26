@@ -1,0 +1,1 @@
+{"name":"corphish","weight":115,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/341.png"},"height":6,"id":341,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

@@ -1,0 +1,1 @@
+{"name":"magikarp","weight":100,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png"},"height":9,"id":129,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

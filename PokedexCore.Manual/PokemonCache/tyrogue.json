@@ -1,0 +1,1 @@
+{"name":"tyrogue","weight":210,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/236.png"},"height":7,"id":236,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/2/","name":"fighting"}}]}

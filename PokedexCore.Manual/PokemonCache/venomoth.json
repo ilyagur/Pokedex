@@ -1,0 +1,1 @@
+{"name":"venomoth","weight":125,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/49.png"},"height":15,"id":49,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/7/","name":"bug"}}]}

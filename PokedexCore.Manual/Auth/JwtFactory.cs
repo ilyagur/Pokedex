@@ -1,15 +1,12 @@
 ﻿using Microsoft.Extensions.Options;
 using PokedexCore.Manual.Models;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
-namespace PokedexCore.Manual.Auth
-{
+namespace PokedexCore.Manual.Auth {
     public class JwtFactory: IJwtFactory
     {
         private readonly JwtIssuerOptions _jwtOptions;

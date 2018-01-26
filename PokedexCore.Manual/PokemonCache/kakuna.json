@@ -1,0 +1,1 @@
+{"name":"kakuna","weight":100,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/14.png"},"height":6,"id":14,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/7/","name":"bug"}}]}

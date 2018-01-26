@@ -1,0 +1,1 @@
+{"name":"surskit","weight":17,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/283.png"},"height":5,"id":283,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/7/","name":"bug"}}]}

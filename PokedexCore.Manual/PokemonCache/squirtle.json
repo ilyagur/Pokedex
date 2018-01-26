@@ -1,0 +1,1 @@
+{"name":"squirtle","weight":90,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"},"height":5,"id":7,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

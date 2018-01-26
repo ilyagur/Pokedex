@@ -1,0 +1,1 @@
+{"name":"tyranitar","weight":2020,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/248.png"},"height":20,"id":248,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/17/","name":"dark"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/6/","name":"rock"}}]}

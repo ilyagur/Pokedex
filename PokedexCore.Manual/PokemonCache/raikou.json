@@ -1,0 +1,1 @@
+{"name":"raikou","weight":1780,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/243.png"},"height":19,"id":243,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/13/","name":"electric"}}]}

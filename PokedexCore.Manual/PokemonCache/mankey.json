@@ -1,0 +1,1 @@
+{"name":"mankey","weight":280,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/56.png"},"height":5,"id":56,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/2/","name":"fighting"}}]}

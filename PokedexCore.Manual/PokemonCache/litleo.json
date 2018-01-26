@@ -1,0 +1,1 @@
+{"name":"litleo","weight":135,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/667.png"},"height":6,"id":667,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/1/","name":"normal"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/10/","name":"fire"}}]}

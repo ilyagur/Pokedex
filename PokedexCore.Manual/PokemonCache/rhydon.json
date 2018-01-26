@@ -1,0 +1,1 @@
+{"name":"rhydon","weight":1200,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/112.png"},"height":19,"id":112,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/6/","name":"rock"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/5/","name":"ground"}}]}

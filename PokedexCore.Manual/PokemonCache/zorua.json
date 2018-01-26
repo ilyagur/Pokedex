@@ -1,0 +1,1 @@
+{"name":"zorua","weight":125,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/570.png"},"height":7,"id":570,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/17/","name":"dark"}}]}

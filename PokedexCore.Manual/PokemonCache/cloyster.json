@@ -1,0 +1,1 @@
+{"name":"cloyster","weight":1325,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/91.png"},"height":15,"id":91,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/15/","name":"ice"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

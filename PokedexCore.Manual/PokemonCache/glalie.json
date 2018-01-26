@@ -1,0 +1,1 @@
+{"name":"glalie","weight":2565,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/362.png"},"height":15,"id":362,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/15/","name":"ice"}}]}

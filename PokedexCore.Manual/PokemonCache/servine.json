@@ -1,0 +1,1 @@
+{"name":"servine","weight":160,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/496.png"},"height":8,"id":496,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/12/","name":"grass"}}]}

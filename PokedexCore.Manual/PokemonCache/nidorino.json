@@ -1,0 +1,1 @@
+{"name":"nidorino","weight":195,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/33.png"},"height":9,"id":33,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/4/","name":"poison"}}]}

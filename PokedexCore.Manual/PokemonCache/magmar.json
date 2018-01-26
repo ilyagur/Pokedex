@@ -1,0 +1,1 @@
+{"name":"magmar","weight":445,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/126.png"},"height":13,"id":126,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/10/","name":"fire"}}]}

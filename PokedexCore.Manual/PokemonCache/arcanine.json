@@ -1,0 +1,1 @@
+{"name":"arcanine","weight":1550,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/59.png"},"height":19,"id":59,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/10/","name":"fire"}}]}

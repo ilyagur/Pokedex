@@ -1,0 +1,1 @@
+{"name":"dragonair","weight":165,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/148.png"},"height":40,"id":148,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/16/","name":"dragon"}}]}

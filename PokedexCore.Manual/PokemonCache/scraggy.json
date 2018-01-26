@@ -1,0 +1,1 @@
+{"name":"scraggy","weight":118,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/559.png"},"height":6,"id":559,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/2/","name":"fighting"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/17/","name":"dark"}}]}

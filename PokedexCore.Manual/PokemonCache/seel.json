@@ -1,0 +1,1 @@
+{"name":"seel","weight":900,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/86.png"},"height":11,"id":86,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

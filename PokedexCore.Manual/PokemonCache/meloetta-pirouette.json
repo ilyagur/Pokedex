@@ -1,0 +1,1 @@
+{"name":"meloetta-pirouette","weight":65,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10018.png"},"height":6,"id":10018,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/2/","name":"fighting"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/1/","name":"normal"}}]}

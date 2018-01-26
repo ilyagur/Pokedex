@@ -1,0 +1,1 @@
+{"name":"wurmple","weight":36,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/265.png"},"height":3,"id":265,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/7/","name":"bug"}}]}

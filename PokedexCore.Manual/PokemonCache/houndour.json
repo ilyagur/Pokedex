@@ -1,0 +1,1 @@
+{"name":"houndour","weight":108,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/228.png"},"height":6,"id":228,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/10/","name":"fire"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/17/","name":"dark"}}]}

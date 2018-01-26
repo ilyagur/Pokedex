@@ -1,0 +1,1 @@
+{"name":"tapu-fini","weight":212,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/788.png"},"height":13,"id":788,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/18/","name":"fairy"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

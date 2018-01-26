@@ -1,0 +1,1 @@
+{"name":"caterpie","weight":29,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png"},"height":3,"id":10,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/7/","name":"bug"}}]}

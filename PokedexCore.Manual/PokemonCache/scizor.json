@@ -1,0 +1,1 @@
+{"name":"scizor","weight":1180,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/212.png"},"height":18,"id":212,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/9/","name":"steel"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/7/","name":"bug"}}]}

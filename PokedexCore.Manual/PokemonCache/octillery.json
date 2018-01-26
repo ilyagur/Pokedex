@@ -1,0 +1,1 @@
+{"name":"octillery","weight":285,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/224.png"},"height":9,"id":224,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

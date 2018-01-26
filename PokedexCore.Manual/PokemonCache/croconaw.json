@@ -1,0 +1,1 @@
+{"name":"croconaw","weight":250,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/159.png"},"height":11,"id":159,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/11/","name":"water"}}]}

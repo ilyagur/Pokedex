@@ -1,0 +1,1 @@
+{"name":"kirlia","weight":202,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/281.png"},"height":8,"id":281,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/18/","name":"fairy"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/14/","name":"psychic"}}]}

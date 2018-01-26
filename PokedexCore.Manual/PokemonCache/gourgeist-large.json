@@ -1,0 +1,1 @@
+{"name":"gourgeist-large","weight":140,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10031.png"},"height":11,"id":10031,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/12/","name":"grass"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/8/","name":"ghost"}}]}

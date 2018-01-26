@@ -1,0 +1,1 @@
+{"name":"duskull","weight":150,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/355.png"},"height":8,"id":355,"types":[{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/8/","name":"ghost"}}]}

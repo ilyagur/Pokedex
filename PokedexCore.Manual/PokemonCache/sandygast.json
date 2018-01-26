@@ -1,0 +1,1 @@
+{"name":"sandygast","weight":700,"sprites":{"front_default":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/769.png"},"height":5,"id":769,"types":[{"slot":2,"type":{"url":"https://pokeapi.co/api/v2/type/5/","name":"ground"}},{"slot":1,"type":{"url":"https://pokeapi.co/api/v2/type/8/","name":"ghost"}}]}
