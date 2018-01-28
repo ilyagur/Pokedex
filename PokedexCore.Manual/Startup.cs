@@ -34,6 +34,7 @@ namespace PokedexCore.Manual {
                 options.UseSqlServer( Configuration.GetConnectionString( "DefaultConnection" ),
                 b => b.MigrationsAssembly( "PokedexCore.Manual" ) ) );
 
+            services.AddAppSettings( Configuration );
             services.AddDependencies();
 
             // Register the ConfigurationBuilder instance of FacebookAuthSettings

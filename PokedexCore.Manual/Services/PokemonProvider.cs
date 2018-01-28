@@ -57,7 +57,7 @@ namespace PokedexCore.Services {
                 i++;
             }
 
-            return selectedPokemons.Select(p => p.Pokemon).Skip( offset ).Take( limit ).ToList(); ;
+            return selectedPokemons.Select(p => p.Pokemon).Skip( offset ).Take( limit ).ToList();
         }
 
         public async Task<Pokemon> GetPokemonByName( string name ) {

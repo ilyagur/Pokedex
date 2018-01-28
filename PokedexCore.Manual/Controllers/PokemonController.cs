@@ -3,6 +3,8 @@ using PokedexCore.Manual.Services.Interfaces;
 using System.Threading.Tasks;
 
 namespace PokedexCore.Manual.Controllers {
+    [Produces( "application/json" )]
+    [Route( "api" )]
     public class PokemonController : Controller
     {
         private IPokemonProvider _pokemonProvider;

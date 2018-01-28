@@ -7,11 +7,9 @@ using System.Linq;
 namespace PokedexCore.Services {
     public class PokemonDbAdapter: IPokemonDbAdapter
     {
-        private readonly IdentityDbContext _identityDbContext;
         private readonly ApplicationDbContext _dbContext;
 
-        public PokemonDbAdapter( IdentityDbContext identityDbContext, ApplicationDbContext dbContext ) {
-            _identityDbContext = identityDbContext;
+        public PokemonDbAdapter(ApplicationDbContext dbContext ) {
             _dbContext = dbContext;
         }
 
