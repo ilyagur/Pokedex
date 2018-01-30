@@ -1,17 +1,18 @@
-﻿import React, { Component } from 'react'
+﻿import React from 'react'
 import ReactDOM from 'react-dom'
+import Redux from 'redux'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
 
-class Test extends Component {
-    render() {
-        return (
-            <div>
-                <h3>Test Text</h3>
-            </div>
-            )
-    }
-}
+import App from './Containers/appContainer'
+import configureStore from './Store/configureStore'
+
+const store = configureStore();
 
 ReactDOM.render(
-    <Test />,
-    document.getElementById('root')
-);
+    <Provider store={store}>
+        <Router>
+            <Route path="/" component={App} />
+        </Router>
+    </Provider>,
+    document.getElementById('root'));
