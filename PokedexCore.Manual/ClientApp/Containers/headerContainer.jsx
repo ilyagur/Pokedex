@@ -7,15 +7,18 @@ class Header extends Component {
     render() {
 
         const {
-            user: {
+            userContext: {
                 isLoginDialogVisible,
                 isRegistrationDialogVisible,
+                fetchStatus,
+                responseMessage,
             },
             userActions: {
                 showLogInDialog,
                 hideLogInDialog,
                 showRegistrationDialog,
                 hideRegistrationDialog,
+                registrate,
                 logIn,
             },
         } = this.props;
@@ -44,8 +47,18 @@ class Header extends Component {
                         </ul>
                     </div>
                 </nav>
-                <LogIn hideLogInDialog={hideLogInDialog} isLoginDialogVisible={isLoginDialogVisible} logIn={logIn} />
-                <Registration hideRegistrationDialog={hideRegistrationDialog} isRegistrationDialogVisible={isRegistrationDialogVisible} />
+                <LogIn
+                    hideLogInDialog={hideLogInDialog}
+                    isLoginDialogVisible={isLoginDialogVisible}
+                    logIn={logIn}
+                    fetchStatus={fetchStatus}
+                    responseMessage={responseMessage} />
+                <Registration
+                    hideRegistrationDialog={hideRegistrationDialog}
+                    isRegistrationDialogVisible={isRegistrationDialogVisible}
+                    registrate={registrate}
+                    fetchStatus={fetchStatus}
+                    responseMessage={responseMessage} />
             </div>
             )
     }

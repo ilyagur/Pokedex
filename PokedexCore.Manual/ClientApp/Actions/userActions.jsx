@@ -39,20 +39,111 @@ export function hideRegistrationDialog() {
 export function logIn(email, password) {
     return (dispatch) => {
 
+        dispatch({
+            type: Constants.SET_FETCH_STATUS,
+            payload: 'PENDING'
+        });
+
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
         fetch(
-            `http://localhost:46160/api/auth/login`,
+            'https://localhost:44378/api/auth/login',
             {
                 method: 'POST',
                 headers: headers,
-                body: JSON.stringify( {
+                body: JSON.stringify({
                     UserName: email,
                     Password: password,
-                } )
+                })
             }
         )
-            .catch(function (error) { console.log(error); });
+            .then(response => {
+                if (response.ok) {
+                    dispatch({
+                        type: Constants.SET_FETCH_STATUS,
+                        payload: 'SUCCESS'
+                    });
+                } else {
+                    dispatch({
+                        type: Constants.SET_FETCH_STATUS,
+                        payload: 'FAIL'
+                    });
+                }
+
+                return response.json();
+            })
+            .then(text => {
+
+                console.log(text)
+
+                dispatch({
+                    type: Constants.SET_RESPONSE_MESSAGE,
+                    payload: text
+                });
+            })
     }
+}
+
+export function registrate(registrationModel) {
+    return (dispatch) => {
+
+        dispatch({
+            type: Constants.SET_FETCH_STATUS,
+            payload: 'PENDING'
+        });
+
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        fetch(
+            'https://localhost:44378/api/Account',
+            {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(registrationModel),
+            }
+        )
+            .then(response => {
+                if (response.ok) {
+                    dispatch({
+                        type: Constants.SET_FETCH_STATUS,
+                        payload: 'SUCCESS'
+                    });
+                } else {
+                    dispatch({
+                        type: Constants.SET_FETCH_STATUS,
+                        payload: 'FAIL'
+                    });
+                }
+
+                return response.json();
+            })
+            .then(text => {
+
+                console.log(text)
+
+                dispatch({
+                    type: Constants.SET_RESPONSE_MESSAGE,
+                    payload: text
+                });
+            })
+    }
+}
+
+export function setResponseMessage(message) {
+    return (dispatch) => {
+        dispatch({
+            type: 'SET_RESPONSE_MESSAGE',
+            payload: message
+        });
+    }
+}
+
+function handleErrors(response) {
+    if (!response.ok) {
+        console.log(response.statusText);
+    }
+
+    return response;
 }

@@ -7,7 +7,7 @@ import userReducer from './userReducer'
 
 export default combineReducers({
     //https://redux.js.org/docs/basics/Reducers.html
-    user: userReducer,
+    userContext: userReducer,
     //page: pageReducer,
     //user: userReducer,
 })

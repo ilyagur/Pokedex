@@ -1,6 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FluentValidation.Attributes;
+using PokedexCore.Manual.Models.Validations;
+using System.ComponentModel.DataAnnotations;
 
 namespace PokedexCore.Manual.Models.ViewModels {
+    [Validator( typeof( RegistrationViewModelValidator ) )]
     public class RegistrationViewModel {
         [Required]
         public string Email { get; set; }

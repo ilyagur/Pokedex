@@ -9,11 +9,11 @@ import Body from './bodyContainer'
 
 class App extends Component {
     render() {
-        const { user, userActions } = this.props;
+        const { userContext, userActions } = this.props;
 
         return (
             <div>
-                <Header user={user} userActions={userActions} />
+                <Header userContext={userContext} userActions={userActions} />
                 <Body />
             </div>
             )
@@ -22,7 +22,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
     return {
-        user: state.user,
+        userContext: state.userContext,
     };
 }
 

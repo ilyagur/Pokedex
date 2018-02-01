@@ -9,7 +9,6 @@
     <Folder Include="Models\Settings\" />
     <Folder Include="PokemonCache\" />
     <Folder Include="Services\Interfaces\" />
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>

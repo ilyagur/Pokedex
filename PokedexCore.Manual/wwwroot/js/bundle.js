@@ -3649,6 +3649,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 var LOGIN_DIALOG_VISIBLE = exports.LOGIN_DIALOG_VISIBLE = 'LOGIN_DIALOG_VISIBLE';
 var REGISTRATION_DIALOG_VISIBLE = exports.REGISTRATION_DIALOG_VISIBLE = 'REGISTRATION_DIALOG_VISIBLE';
+var SET_FETCH_STATUS = exports.SET_FETCH_STATUS = 'SET_FETCH_STATUS';
+var SET_RESPONSE_MESSAGE = exports.SET_RESPONSE_MESSAGE = 'SET_RESPONSE_MESSAGE';
 
 /***/ }),
 /* 49 */
@@ -15912,14 +15914,14 @@ var App = function (_Component) {
         key: 'render',
         value: function render() {
             var _props = this.props,
-                user = _props.user,
+                userContext = _props.userContext,
                 userActions = _props.userActions;
 
 
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_headerContainer2.default, { user: user, userActions: userActions }),
+                _react2.default.createElement(_headerContainer2.default, { userContext: userContext, userActions: userActions }),
                 _react2.default.createElement(_bodyContainer2.default, null)
             );
         }
@@ -15930,7 +15932,7 @@ var App = function (_Component) {
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        userContext: state.userContext
     };
 }
 
@@ -15957,6 +15959,8 @@ exports.hideLogInDialog = hideLogInDialog;
 exports.showRegistrationDialog = showRegistrationDialog;
 exports.hideRegistrationDialog = hideRegistrationDialog;
 exports.logIn = logIn;
+exports.registrate = registrate;
+exports.setResponseMessage = setResponseMessage;
 
 var _userConstants = __webpack_require__(48);
 
@@ -16003,20 +16007,103 @@ function hideRegistrationDialog() {
 function logIn(email, password) {
     return function (dispatch) {
 
+        dispatch({
+            type: Constants.SET_FETCH_STATUS,
+            payload: 'PENDING'
+        });
+
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        fetch('http://localhost:46160/api/auth/login', {
+        fetch('https://localhost:44378/api/auth/login', {
             method: 'POST',
             headers: headers,
             body: JSON.stringify({
                 UserName: email,
                 Password: password
             })
-        }).catch(function (error) {
-            console.log(error);
+        }).then(function (response) {
+            if (response.ok) {
+                dispatch({
+                    type: Constants.SET_FETCH_STATUS,
+                    payload: 'SUCCESS'
+                });
+            } else {
+                dispatch({
+                    type: Constants.SET_FETCH_STATUS,
+                    payload: 'FAIL'
+                });
+            }
+
+            return response.json();
+        }).then(function (text) {
+
+            console.log(text);
+
+            dispatch({
+                type: Constants.SET_RESPONSE_MESSAGE,
+                payload: text
+            });
         });
     };
+}
+
+function registrate(registrationModel) {
+    return function (dispatch) {
+
+        dispatch({
+            type: Constants.SET_FETCH_STATUS,
+            payload: 'PENDING'
+        });
+
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        fetch('https://localhost:44378/api/Account', {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(registrationModel)
+        }).then(function (response) {
+            if (response.ok) {
+                dispatch({
+                    type: Constants.SET_FETCH_STATUS,
+                    payload: 'SUCCESS'
+                });
+            } else {
+                dispatch({
+                    type: Constants.SET_FETCH_STATUS,
+                    payload: 'FAIL'
+                });
+            }
+
+            return response.json();
+        }).then(function (text) {
+
+            console.log(text);
+
+            dispatch({
+                type: Constants.SET_RESPONSE_MESSAGE,
+                payload: text
+            });
+        });
+    };
+}
+
+function setResponseMessage(message) {
+    return function (dispatch) {
+        dispatch({
+            type: 'SET_RESPONSE_MESSAGE',
+            payload: message
+        });
+    };
+}
+
+function handleErrors(response) {
+    if (!response.ok) {
+        console.log(response.statusText);
+    }
+
+    return response;
 }
 
 /***/ }),
@@ -16065,14 +16152,17 @@ var Header = function (_Component) {
         key: 'render',
         value: function render() {
             var _props = this.props,
-                _props$user = _props.user,
-                isLoginDialogVisible = _props$user.isLoginDialogVisible,
-                isRegistrationDialogVisible = _props$user.isRegistrationDialogVisible,
+                _props$userContext = _props.userContext,
+                isLoginDialogVisible = _props$userContext.isLoginDialogVisible,
+                isRegistrationDialogVisible = _props$userContext.isRegistrationDialogVisible,
+                fetchStatus = _props$userContext.fetchStatus,
+                responseMessage = _props$userContext.responseMessage,
                 _props$userActions = _props.userActions,
                 showLogInDialog = _props$userActions.showLogInDialog,
                 hideLogInDialog = _props$userActions.hideLogInDialog,
                 showRegistrationDialog = _props$userActions.showRegistrationDialog,
                 hideRegistrationDialog = _props$userActions.hideRegistrationDialog,
+                registrate = _props$userActions.registrate,
                 logIn = _props$userActions.logIn;
 
 
@@ -16141,8 +16231,18 @@ var Header = function (_Component) {
                         )
                     )
                 ),
-                _react2.default.createElement(_logInComponent2.default, { hideLogInDialog: hideLogInDialog, isLoginDialogVisible: isLoginDialogVisible, logIn: logIn }),
-                _react2.default.createElement(_registrationComponent2.default, { hideRegistrationDialog: hideRegistrationDialog, isRegistrationDialogVisible: isRegistrationDialogVisible })
+                _react2.default.createElement(_logInComponent2.default, {
+                    hideLogInDialog: hideLogInDialog,
+                    isLoginDialogVisible: isLoginDialogVisible,
+                    logIn: logIn,
+                    fetchStatus: fetchStatus,
+                    responseMessage: responseMessage }),
+                _react2.default.createElement(_registrationComponent2.default, {
+                    hideRegistrationDialog: hideRegistrationDialog,
+                    isRegistrationDialogVisible: isRegistrationDialogVisible,
+                    registrate: registrate,
+                    fetchStatus: fetchStatus,
+                    responseMessage: responseMessage })
             );
         }
     }]);
@@ -16211,10 +16311,53 @@ var LogIn = function (_Component) {
             var _props = this.props,
                 hideLogInDialog = _props.hideLogInDialog,
                 isLoginDialogVisible = _props.isLoginDialogVisible,
-                logIn = _props.logIn;
+                fetchStatus = _props.fetchStatus,
+                logIn = _props.logIn,
+                responseMessage = _props.responseMessage;
 
 
             var style = { display: isLoginDialogVisible ? 'block' : 'none' };
+
+            var footer = fetchStatus == 'PENDING' ? _react2.default.createElement(
+                'div',
+                { className: 'modal-footer' },
+                _react2.default.createElement('img', { src: 'spinner.gif' })
+            ) : _react2.default.createElement(
+                'div',
+                { className: 'modal-footer' },
+                _react2.default.createElement(
+                    'button',
+                    { onClick: logIn.bind(this, this.state.email, this.state.password), type: 'button', className: 'btn btn-primary' },
+                    'Log In'
+                ),
+                _react2.default.createElement(
+                    'button',
+                    { onClick: hideLogInDialog, type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
+                    'Close'
+                )
+            );
+
+            var validationMessageFor = function validationMessageFor(prop) {
+                return responseMessage && responseMessage.hasOwnProperty(prop) ? _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'ul',
+                        null,
+                        responseMessage[prop].map(function (er, i) {
+                            return _react2.default.createElement(
+                                'li',
+                                { key: i },
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'badge badge-secondary' },
+                                    er
+                                )
+                            );
+                        })
+                    )
+                ) : _react2.default.createElement('div', null);
+            };
 
             return _react2.default.createElement(
                 'div',
@@ -16259,7 +16402,8 @@ var LogIn = function (_Component) {
                                     ),
                                     _react2.default.createElement('input', { value: this.state.email, onChange: function onChange(evt) {
                                             return _this2.updateValue('email', evt);
-                                        }, type: 'text', className: 'form-control', id: 'exampleInputEmail1', 'aria-describedby': 'emailHelp', placeholder: 'Enter email' })
+                                        }, type: 'text', className: 'form-control', id: 'exampleInputEmail1', 'aria-describedby': 'emailHelp', placeholder: 'Enter email' }),
+                                    validationMessageFor('UserName')
                                 ),
                                 _react2.default.createElement(
                                     'div',
@@ -16271,24 +16415,13 @@ var LogIn = function (_Component) {
                                     ),
                                     _react2.default.createElement('input', { value: this.state.password, onChange: function onChange(evt) {
                                             return _this2.updateValue('password', evt);
-                                        }, type: 'password', className: 'form-control', id: 'exampleInputPassword1', placeholder: 'Password' })
+                                        }, type: 'password', className: 'form-control', id: 'exampleInputPassword1', placeholder: 'Password' }),
+                                    validationMessageFor('Password')
                                 )
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'modal-footer' },
-                            _react2.default.createElement(
-                                'button',
-                                { onClick: logIn.bind(this, this.state.email, this.state.password), type: 'button', className: 'btn btn-primary' },
-                                'Save changes'
                             ),
-                            _react2.default.createElement(
-                                'button',
-                                { onClick: hideLogInDialog, type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
-                                'Close'
-                            )
-                        )
+                            validationMessageFor('login_failure')
+                        ),
+                        footer
                     )
                 )
             );
@@ -16300,7 +16433,9 @@ var LogIn = function (_Component) {
 
 LogIn.propTypes = {
     hideLogInDialog: _propTypes2.default.func.isRequired,
-    isLoginDialogVisible: _propTypes2.default.bool.isRequired
+    isLoginDialogVisible: _propTypes2.default.bool.isRequired,
+    fetchStatus: _propTypes2.default.string.isRequired,
+    logIn: _propTypes2.default.func.isRequired
 };
 
 exports.default = LogIn;
@@ -16328,6 +16463,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -16337,21 +16474,81 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Registration = function (_Component) {
     _inherits(Registration, _Component);
 
-    function Registration() {
+    function Registration(props) {
         _classCallCheck(this, Registration);
 
-        return _possibleConstructorReturn(this, (Registration.__proto__ || Object.getPrototypeOf(Registration)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Registration.__proto__ || Object.getPrototypeOf(Registration)).call(this, props));
+
+        _this.state = {
+            Email: '',
+            Password: '',
+            FirstName: '',
+            LastName: '',
+            Location: ''
+        };
+        return _this;
     }
 
     _createClass(Registration, [{
+        key: 'updateValue',
+        value: function updateValue(prop, evt) {
+            this.setState(_defineProperty({}, prop, evt.target.value));
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var _props = this.props,
                 hideRegistrationDialog = _props.hideRegistrationDialog,
-                isRegistrationDialogVisible = _props.isRegistrationDialogVisible;
+                isRegistrationDialogVisible = _props.isRegistrationDialogVisible,
+                fetchStatus = _props.fetchStatus,
+                registrate = _props.registrate,
+                responseMessage = _props.responseMessage;
 
 
             var style = { display: isRegistrationDialogVisible ? 'block' : 'none' };
+
+            var footer = fetchStatus == 'PENDING' ? _react2.default.createElement(
+                'div',
+                { className: 'modal-footer' },
+                _react2.default.createElement('img', { src: 'spinner.gif' })
+            ) : _react2.default.createElement(
+                'div',
+                { className: 'modal-footer' },
+                _react2.default.createElement(
+                    'button',
+                    { onClick: registrate.bind(this, this.state), type: 'button', className: 'btn btn-primary' },
+                    'Registrate'
+                ),
+                _react2.default.createElement(
+                    'button',
+                    { onClick: hideRegistrationDialog, type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
+                    'Close'
+                )
+            );
+
+            var validationMessageFor = function validationMessageFor(prop) {
+                return responseMessage && responseMessage.hasOwnProperty(prop) ? _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'ul',
+                        null,
+                        responseMessage[prop].map(function (er, i) {
+                            return _react2.default.createElement(
+                                'li',
+                                { key: i },
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'badge badge-secondary' },
+                                    er
+                                )
+                            );
+                        })
+                    )
+                ) : _react2.default.createElement('div', null);
+            };
 
             return _react2.default.createElement(
                 'div',
@@ -16384,25 +16581,76 @@ var Registration = function (_Component) {
                             'div',
                             { className: 'modal-body' },
                             _react2.default.createElement(
-                                'p',
+                                'form',
                                 null,
-                                'Registration Body'
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'label',
+                                        null,
+                                        'Email address'
+                                    ),
+                                    _react2.default.createElement('input', { value: this.state.Email, onChange: function onChange(evt) {
+                                            return _this2.updateValue('Email', evt);
+                                        }, type: 'text', className: 'form-control', placeholder: 'Enter email' }),
+                                    validationMessageFor('Email')
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'label',
+                                        null,
+                                        'Password'
+                                    ),
+                                    _react2.default.createElement('input', { value: this.state.Password, onChange: function onChange(evt) {
+                                            return _this2.updateValue('Password', evt);
+                                        }, type: 'password', className: 'form-control', placeholder: 'Password' }),
+                                    validationMessageFor('Password')
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'label',
+                                        null,
+                                        'Email address'
+                                    ),
+                                    _react2.default.createElement('input', { value: this.state.FirstName, onChange: function onChange(evt) {
+                                            return _this2.updateValue('FirstName', evt);
+                                        }, type: 'text', className: 'form-control', placeholder: 'Enter first name' }),
+                                    validationMessageFor('FirstName')
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'label',
+                                        null,
+                                        'Password'
+                                    ),
+                                    _react2.default.createElement('input', { value: this.state.LastName, onChange: function onChange(evt) {
+                                            return _this2.updateValue('LastName', evt);
+                                        }, type: 'text', className: 'form-control', placeholder: 'Enter last name' }),
+                                    validationMessageFor('LastName')
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'label',
+                                        null,
+                                        'Password'
+                                    ),
+                                    _react2.default.createElement('input', { value: this.state.Location, onChange: function onChange(evt) {
+                                            return _this2.updateValue('Location', evt);
+                                        }, type: 'text', className: 'form-control', placeholder: 'Your location' }),
+                                    validationMessageFor('Location')
+                                )
                             )
                         ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'modal-footer' },
-                            _react2.default.createElement(
-                                'button',
-                                { type: 'button', className: 'btn btn-primary' },
-                                'Save changes'
-                            ),
-                            _react2.default.createElement(
-                                'button',
-                                { onClick: hideRegistrationDialog, type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
-                                'Close'
-                            )
-                        )
+                        footer
                     )
                 )
             );
@@ -16552,7 +16800,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (0, _redux.combineReducers)({
     //https://redux.js.org/docs/basics/Reducers.html
-    user: _userReducer2.default
+    userContext: _userReducer2.default
     //page: pageReducer,
     //user: userReducer,
 });
@@ -16577,7 +16825,9 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var initialState = {
     isLoginDialogVisible: false,
-    isRegistrationDialogVisible: false
+    isRegistrationDialogVisible: false,
+    fetchStatus: '',
+    responseMessage: ''
 };
 
 function reducer() {
@@ -16589,6 +16839,10 @@ function reducer() {
             return Object.assign({}, state, { isLoginDialogVisible: action.payload });
         case Constants.REGISTRATION_DIALOG_VISIBLE:
             return Object.assign({}, state, { isRegistrationDialogVisible: action.payload });
+        case Constants.SET_FETCH_STATUS:
+            return Object.assign({}, state, { fetchStatus: action.payload });
+        case Constants.SET_RESPONSE_MESSAGE:
+            return Object.assign({}, state, { responseMessage: action.payload });
         default:
             return state;
     }
