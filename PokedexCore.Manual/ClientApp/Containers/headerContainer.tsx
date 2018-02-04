@@ -3,7 +3,28 @@
 import LogIn from './../Components/logInComponent'
 import Registration from './../Components/registrationComponent'
 
-class Header extends Component {
+interface UserContext {
+    isLoginDialogVisible: boolean,
+    isRegistrationDialogVisible: boolean,
+    fetchStatus: string,
+    responseMessage: object,
+}
+
+interface UserActions {
+    showLogInDialog: void,
+    hideLogInDialog: void,
+    showRegistrationDialog: void,
+    hideRegistrationDialog: void,
+    registrate(model: object): void,
+    logIn: void,
+}
+
+interface appProps {
+    userContext: UserContext,
+    userActions: UserActions
+}
+
+class Header extends Component<any, {}> {
     render() {
 
         const {

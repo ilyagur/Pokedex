@@ -4,7 +4,7 @@ var WebpackNotifierPlugin = require('webpack-notifier');
 var Path = require('path');
 
 module.exports = {
-    entry: "./ClientApp/root.jsx",
+    entry: "./ClientApp/root.tsx",
     output: {
         filename: "./wwwroot/js/bundle.js"
     },
@@ -13,22 +13,20 @@ module.exports = {
             Path.resolve('./node_modules')
         ],
         // возможно стоит добавить пустое "" расширение в extenstions 
-        extensions: [".webpack.js", ".web.js", ".js", ".json", ".jsx"]
+        extensions: [".webpack.js", ".web.js", ".js", ".json", ".jsx", ".ts", ".tsx"]
     },
     module: {
         loaders: [
             {
-                test: /\.js$/,
+                test: /\.ts?$/,
+                loader: "ts-loader",
                 exclude: /node_modules/,
-                loaders: ['babel-loader', 'eslint-loader']
             },
             {
-                test: /\.jsx?$/,
-                loader: "babel-loader",
-                query: {
-                    presets: ['es2015', 'react']
-                }
-            }
+                test: /\.tsx?$/,
+                loader: "ts-loader",
+                exclude: /node_modules/,
+            },
         ]
     },
     plugins: [

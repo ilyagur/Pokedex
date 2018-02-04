@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
-class LogIn extends Component {
+class LogIn extends Component<any, any> {
     constructor(props) {
         super(props);
 
@@ -88,13 +87,6 @@ class LogIn extends Component {
             </div>
         )
     }
-}
-
-LogIn.propTypes = {
-    hideLogInDialog: PropTypes.func.isRequired,
-    isLoginDialogVisible: PropTypes.bool.isRequired,
-    fetchStatus: PropTypes.string.isRequired,
-    logIn: PropTypes.func.isRequired,
 }
 
 export default LogIn

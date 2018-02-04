@@ -1,7 +1,14 @@
 ﻿import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
-class Registration extends Component {
+export interface props {
+
+}
+
+export interface state {
+
+}
+
+class Registration extends Component<any, any> {
     constructor(props) {
         super(props);
 
@@ -103,11 +110,6 @@ class Registration extends Component {
             </div>
         )
     }
-}
-
-Registration.propTypes = {
-    hideRegistrationDialog: PropTypes.func.isRequired,
-    isRegistrationDialogVisible: PropTypes.bool.isRequired,
 }
 
 export default Registration

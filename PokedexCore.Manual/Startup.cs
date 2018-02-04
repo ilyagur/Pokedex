@@ -84,8 +84,6 @@ namespace PokedexCore.Manual {
                 options.AddPolicy( "ApiUser", policy => policy.RequireClaim( Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess ) );
             } );
 
-            services.AddMvc();
-
             var builder = services.AddIdentityCore<AppUser>( o =>
             {
                 // configure identity options
